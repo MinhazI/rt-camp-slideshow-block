@@ -18,15 +18,25 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
-/**
- * Registers the block using the metadata loaded from the `block.json` file.
- * Behind the scenes, it registers also all assets so they can be enqueued
- * through the block editor in the corresponding context.
- *
- * @see https://developer.wordpress.org/reference/functions/register_block_type/
- */
 function rt_camp_slideshow_block_rt_camp_slideshow_block_block_init()
 {
 	register_block_type(__DIR__ . '/build');
 }
 add_action('init', 'rt_camp_slideshow_block_rt_camp_slideshow_block_block_init');
+
+function register_block_category($categories)
+{
+
+	$categories[] = array(
+		'slug'  => 'rtcamp-assignment-category',
+		'title' => 'rtCamp Assignment Category'
+	);
+
+	return $categories;
+}
+
+if (version_compare(get_bloginfo('version'), '5.8', '>=')) {
+	add_filter('block_categories_all', 'register_block_category');
+} else {
+	add_filter('block_categories', 'register_block_category');
+}

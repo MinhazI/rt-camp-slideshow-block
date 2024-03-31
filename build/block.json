@@ -1,10 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "create-block/rt-camp-slideshow-block",
+  "name": "minhaz/rt-camp-slideshow-block",
   "version": "0.1.0",
   "title": "rtCamp Slideshow Block",
-  "category": "rtCamp Slideshow",
+  "category": "rtcamp-assignment-category",
   "icon": "slides",
   "description": "Gutenberg Slideshow Block for WordPress Posts assignment from rtCamp.",
   "example": {},
@@ -12,7 +12,23 @@
     "html": false
   },
   "attributes": {
-    "title": {
+    "url": {
+      "type": "string",
+      "default": "https://www.wptavern.com"
+    },
+    "displayTitle": {
+      "type": "boolean",
+      "default": true
+    },
+    "displayImage": {
+      "type": "boolean",
+      "default": true
+    },
+    "displayDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "displayAuthor": {
       "type": "boolean",
       "default": true
     }
