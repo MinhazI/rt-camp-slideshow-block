@@ -20,9 +20,9 @@ const SliderBlock = ({ posts, attributes }) => {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			nextSlide();
-		}, 3000);
+		}, 7000);
 		return () => clearInterval(interval);
-	}, []);
+	}, [posts]);
 
 	const setSlide = (index) => {
 		setCurrentSlide(index);
