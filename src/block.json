@@ -12,23 +12,47 @@
 		"html": false
 	},
 	"attributes": {
-		"url": {
+		"sliderBlogUrl": {
 			"type": "string",
 			"default": "https://www.wptavern.com"
 		},
-		"displayTitle": {
+		"sliderDisplayTitle": {
 			"type": "boolean",
 			"default": true
 		},
-		"displayImage": {
+		"sliderDisplayExcerpt": {
 			"type": "boolean",
 			"default": true
 		},
-		"displayDate": {
+		"sliderDisplayImage": {
 			"type": "boolean",
 			"default": true
 		},
-		"displayAuthor": {
+		"sliderDisplayDate": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayAuthor": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayCategories": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderAutoSlide": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayArrows": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayNavigation": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderShowReadMoreButton": {
 			"type": "boolean",
 			"default": true
 		}

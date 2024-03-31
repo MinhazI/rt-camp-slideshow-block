@@ -3,15 +3,16 @@
   \****************************************************************************************************************************************************************************************************************************************/
 .slideshow-container {
   position: relative;
+  background-color: transparent;
 }
 
-.slide {
+.slideshow-container .slide {
   padding: 80px;
   text-align: center;
 }
 
-.prev,
-.next {
+.slideshow-container .prev,
+.slideshow-container .next {
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -27,45 +28,46 @@
           user-select: none;
 }
 
-.next {
+.slideshow-container .next {
   position: absolute;
   right: 0;
   border-radius: 3px 0 0 3px;
 }
 
-.prev:hover,
-.next:hover {
+.slideshow-container .prev:hover,
+.slideshow-container .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
 }
 
-.navigation-container {
+.slideshow-container .navigation-container {
   text-align: center;
   padding: 20px;
 }
 
-.navigation {
+.slideshow-container .navigation {
   cursor: pointer;
-  height: 5px;
-  width: 10px;
-  margin: 0 2px;
+  height: 8px;
+  width: 8px;
+  margin: 0 3px;
   background-color: #bbb;
   display: inline-block;
   transition: background-color 0.6s ease;
-  border-radius: 30%;
+  border-radius: 100%;
 }
 
-.navigation.active {
-  height: 5px;
-  width: 15px;
+.slideshow-container .navigation.active {
+  height: 8px;
+  width: 16px;
+  border-radius: 40%;
 }
 
-.active,
-.dot:hover {
-  background-color: #717171;
+.slideshow-container .navigation.active,
+.slideshow-container .navigation:hover {
+  background-color: #000000;
 }
 
-a:where(:not(.wp-element-button)) {
+.slideshow-container a:where(:not(.wp-element-button)) {
   text-decoration: none !important;
 }
 
