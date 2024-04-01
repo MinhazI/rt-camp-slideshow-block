@@ -58,22 +58,31 @@ function rt_camp_slideshow_block_render($attributes)
 		if (!empty($external_posts)) {
 			return render_slider_block($external_posts, $attributes);
 		} else {
-			return '<p>No posts found. Please check the external blog link.</p>';
+			return '<p>No posts found. Please check the blog link.</p>';
 		}
 	} else {
-		return '<p>Failed to fetch posts from the external blog.</p>';
+		return '<p>Failed to fetch posts from the blog.</p>';
 	}
 }
 
 function render_slider_block($posts, $attributes)
 {
-	// Start building the output
 	ob_start();
+
+	$sliderBlogUrl = $attributes['sliderBlogUrl'];
 ?>
 	<div class="slider-block">
 		<div class="slideshow-container">
-			<?php foreach ($posts as $post) : setup_postdata($post); ?>
-				<div class="slide">
+			<?php foreach ($posts as $post) : setup_postdata($post);
+				$featured_image_response = wp_remote_get($sliderBlogUrl . 'wp-json/wp/v2/media/' . $post->featured_media);
+				$featured_image_response_array = json_decode($featured_image_response['body'], true);
+				if (!empty($featured_image_response_array['guid'])) {
+					$featured_image_url = $featured_image_response_array['guid']['rendered'];
+				} else {
+					$featured_image_url = "none";
+				}
+			?>
+				<div class="slide" style="background-image: url('<?php echo $featured_image_url ?>'); background-size: cover; background-position: center; position: relative">
 					<?php if ($attributes['sliderDisplayTitle']) : ?>
 						<h3><?php echo esc_html($post->title->rendered); ?></h3>
 					<?php endif; ?>
@@ -94,18 +103,18 @@ function render_slider_block($posts, $attributes)
 					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
+			<?php if ($attributes['sliderDisplayArrows']) : ?>
+				<a class="prev"><span class="dashicons dashicons-arrow-left-alt2"></span></a>
+				<a class="next"><span class="dashicons dashicons-arrow-right-alt2"></span></a>
+			<?php endif; ?>
+			<?php if ($attributes['sliderDisplayNavigation']) : ?>
+				<div class="navigation-container">
+					<?php foreach ($posts as $post) : setup_postdata($post); ?>
+						<span class="navigation"></span>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
 		</div>
-		<?php if ($attributes['sliderDisplayArrows']) : ?>
-			<a class="prev">Previous</a>
-			<a class="next">Next</a>
-		<?php endif; ?>
-		<?php if ($attributes['sliderDisplayNavigation']) : ?>
-			<div class="navigation-container">
-				<?php foreach ($posts as $post) : setup_postdata($post); ?>
-					<span class="navigation"></span>
-				<?php endforeach; ?>
-			</div>
-		<?php endif; ?>
 	</div>
 <?php
 	wp_reset_postdata();

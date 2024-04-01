@@ -7,9 +7,7 @@ import {
 	ToggleControl,
 } from "@wordpress/components";
 import "./editor.scss";
-import "./includes/sliderBlock.js";
 import { useBlockProps } from "@wordpress/block-editor";
-import { useEffect, useState } from "@wordpress/element";
 
 import metadata from "./block.json";
 import ServerSideRender from "@wordpress/server-side-render";
@@ -146,9 +144,7 @@ const Edit = ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 			<div {...useBlockProps()}>
-				<Disabled>
-					<ServerSideRender block={metadata.name} attributes={attributes} />
-				</Disabled>
+				<ServerSideRender block={metadata.name} attributes={attributes} />
 			</div>
 		</>
 	);
