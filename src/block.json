@@ -1,15 +1,61 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "create-block/rt-camp-slideshow-block",
+	"name": "minhaz/rt-camp-slideshow-block",
 	"version": "0.1.0",
 	"title": "rtCamp Slideshow Block",
-	"category": "rtCamp Slideshow",
+	"category": "rtcamp-assignment-category",
 	"icon": "slides",
 	"description": "Gutenberg Slideshow Block for WordPress Posts assignment from rtCamp.",
 	"example": {},
 	"supports": {
 		"html": false
+	},
+	"attributes": {
+		"sliderBlogUrl": {
+			"type": "string",
+			"default": "https://www.wptavern.com"
+		},
+		"sliderDisplayTitle": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayExcerpt": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayImage": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayDate": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayAuthor": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayCategories": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderAutoSlide": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayArrows": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderDisplayNavigation": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderShowReadMoreButton": {
+			"type": "boolean",
+			"default": true
+		}
 	},
 	"textdomain": "rt-camp-slideshow-block",
 	"editorScript": "file:./index.js",

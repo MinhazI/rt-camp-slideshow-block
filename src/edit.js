@@ -1,34 +1,157 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
 import { __ } from "@wordpress/i18n";
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from "@wordpress/block-editor";
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
+import { InspectorControls } from "@wordpress/block-editor";
+import {
+	Disabled,
+	PanelBody,
+	TextControl,
+	ToggleControl,
+} from "@wordpress/components";
 import "./editor.scss";
+import "./includes/sliderBlock.js";
+import { useBlockProps } from "@wordpress/block-editor";
+import { useEffect, useState } from "@wordpress/element";
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {Element} Element to render.
- */
-export default function Edit() {
-	return <p {...useBlockProps()}>rtCamp Slideshow</p>;
-}
+import metadata from "./block.json";
+import ServerSideRender from "@wordpress/server-side-render";
+
+const Edit = ({ attributes, setAttributes }) => {
+	const {
+		sliderBlogUrl,
+		sliderDisplayTitle,
+		sliderDisplayExcerpt,
+		sliderDisplayImage,
+		sliderDisplayDate,
+		sliderDisplayAuthor,
+		sliderDisplayCategories,
+		sliderAutoSlide,
+		sliderDisplayArrows,
+		sliderDisplayNavigation,
+		sliderShowReadMoreButton,
+	} = attributes;
+
+	return (
+		<>
+			<InspectorControls>
+				<PanelBody title={__("Settings", "boilerplate")} initialOpen={true}>
+					<TextControl
+						label="Blog link"
+						value={sliderBlogUrl}
+						onChange={(newUrl) => {
+							setAttributes({ sliderBlogUrl: newUrl });
+						}}
+						help="Please enter the link you want us to extract the posts from. Keep this empty to use your websites."
+					/>
+					<ToggleControl
+						label="Show post title"
+						help={sliderDisplayTitle ? "Showing title" : "Not showing title"}
+						checked={sliderDisplayTitle}
+						onChange={(userChoice) => {
+							setAttributes({ sliderDisplayTitle: userChoice });
+						}}
+					/>
+					<ToggleControl
+						label="Show excerpt"
+						help={
+							sliderDisplayExcerpt ? "Showing excerpt" : "Not showing excerpt"
+						}
+						checked={sliderDisplayExcerpt}
+						onChange={(userChoice) => {
+							setAttributes({ sliderDisplayExcerpt: userChoice });
+						}}
+					/>
+					<ToggleControl
+						label="Show featured image"
+						help={
+							sliderDisplayImage
+								? "Showing featured image"
+								: "Not showing featured image"
+						}
+						checked={sliderDisplayImage}
+						onChange={(userChoice) => {
+							setAttributes({ sliderDisplayImage: userChoice });
+						}}
+					/>
+					<ToggleControl
+						label="Show date"
+						help={sliderDisplayDate ? "Showing date" : "Not showing date"}
+						checked={sliderDisplayDate}
+						onChange={(userChoice) => {
+							setAttributes({ sliderDisplayDate: userChoice });
+						}}
+					/>
+					<ToggleControl
+						label="Show author"
+						help={sliderDisplayAuthor ? "Showing author" : "Not showing author"}
+						checked={sliderDisplayAuthor}
+						onChange={(userChoice) => {
+							setAttributes({ sliderDisplayAuthor: userChoice });
+						}}
+					/>
+					<ToggleControl
+						label="Show read more button"
+						help={
+							sliderShowReadMoreButton
+								? "Showing read more button"
+								: "Not showing read more button"
+						}
+						checked={sliderShowReadMoreButton}
+						onChange={(userChoice) => {
+							setAttributes({ sliderShowReadMoreButton: userChoice });
+						}}
+					/>
+					<ToggleControl
+						label="Show categories"
+						help={
+							sliderDisplayCategories
+								? "Showing categories"
+								: "Not showing categories"
+						}
+						checked={sliderDisplayCategories}
+						onChange={(userChoice) => {
+							setAttributes({ sliderDisplayCategories: userChoice });
+						}}
+					/>
+					<ToggleControl
+						label="Show navigation"
+						help={
+							sliderDisplayNavigation
+								? "Show slider navigation"
+								: "Hide slider navigation"
+						}
+						checked={sliderDisplayNavigation}
+						onChange={(userChoice) => {
+							setAttributes({ sliderDisplayNavigation: userChoice });
+						}}
+					/>
+					<ToggleControl
+						label="Auto slide"
+						help={
+							sliderAutoSlide
+								? "Slider will auto slide"
+								: "Slider will not auto slide"
+						}
+						checked={sliderAutoSlide}
+						onChange={(userChoice) => {
+							setAttributes({ sliderAutoSlide: userChoice });
+						}}
+					/>
+					<ToggleControl
+						label="Slider arrows"
+						help={sliderAutoSlide ? "Show slider arrows" : "Hide slider arrows"}
+						checked={sliderDisplayArrows}
+						onChange={(userChoice) => {
+							setAttributes({ sliderDisplayArrows: userChoice });
+						}}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div {...useBlockProps()}>
+				<Disabled>
+					<ServerSideRender block={metadata.name} attributes={attributes} />
+				</Disabled>
+			</div>
+		</>
+	);
+};
+
+export default Edit;
