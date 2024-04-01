@@ -1,10 +1,18 @@
 import { __ } from "@wordpress/i18n";
 import { InspectorControls } from "@wordpress/block-editor";
-import { PanelBody, TextControl, ToggleControl } from "@wordpress/components";
+import {
+	Disabled,
+	PanelBody,
+	TextControl,
+	ToggleControl,
+} from "@wordpress/components";
 import "./editor.scss";
 import "./includes/sliderBlock.js";
+import { useBlockProps } from "@wordpress/block-editor";
 import { useEffect, useState } from "@wordpress/element";
-import SliderBlock from "./includes/sliderBlock.js";
+
+import metadata from "./block.json";
+import ServerSideRender from "@wordpress/server-side-render";
 
 const Edit = ({ attributes, setAttributes }) => {
 	const {
@@ -20,42 +28,6 @@ const Edit = ({ attributes, setAttributes }) => {
 		sliderDisplayNavigation,
 		sliderShowReadMoreButton,
 	} = attributes;
-	const [posts, setPosts] = useState([]);
-
-	const fetchPosts = async () => {
-		const response = await fetch(`${sliderBlogUrl}/wp-json/wp/v2/posts`);
-		if (!response.ok) {
-			throw new Error("Failed to fetch posts");
-		}
-		const data = await response.json();
-		// const postsWithFeaturedImages = await Promise.all(
-		// 	data.map(async (post) => {
-		// 		const authorResponse = await fetch(
-		// 			`${url}/wp-json/wp/v2/users/${post.author}`,
-		// 		);
-		// 		const authorData = await authorResponse.json();
-		// 		const categoriesResponse = await fetch(
-		// 			`${url}/wp-json/wp/v2/posts/${post.id}/categories/${post}`,
-		// 		);
-		// 		const categoriesData = await categoriesResponse.json();
-		// 		const featuredMediaResponse = await fetch(
-		// 			`${url}/wp-json/wp/v2/media/${post.featured_media}`,
-		// 		);
-		// 		const featuredMediaData = await featuredMediaResponse.json();
-		// 		return {
-		// 			...post,
-		// 			author: authorData.name,
-		// 			categories: categoriesData,
-		// 			featuredImage: featuredMediaData.source_url,
-		// 		};
-		// 	}),
-		// );
-		setPosts(data);
-	};
-
-	useEffect(() => {
-		fetchPosts();
-	}, [sliderBlogUrl]);
 
 	return (
 		<>
@@ -173,7 +145,11 @@ const Edit = ({ attributes, setAttributes }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<SliderBlock posts={posts} attributes={attributes} />
+			<div {...useBlockProps()}>
+				<Disabled>
+					<ServerSideRender block={metadata.name} attributes={attributes} />
+				</Disabled>
+			</div>
 		</>
 	);
 };

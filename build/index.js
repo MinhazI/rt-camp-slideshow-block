@@ -84,6 +84,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _includes_sliderBlock_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./includes/sliderBlock.js */ "./src/includes/sliderBlock.js");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./block.json */ "./src/block.json");
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_8__);
+
+
 
 
 
@@ -109,40 +114,6 @@ const Edit = ({
     sliderDisplayNavigation,
     sliderShowReadMoreButton
   } = attributes;
-  const [posts, setPosts] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)([]);
-  const fetchPosts = async () => {
-    const response = await fetch(`${sliderBlogUrl}/wp-json/wp/v2/posts`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch posts");
-    }
-    const data = await response.json();
-    // const postsWithFeaturedImages = await Promise.all(
-    // 	data.map(async (post) => {
-    // 		const authorResponse = await fetch(
-    // 			`${url}/wp-json/wp/v2/users/${post.author}`,
-    // 		);
-    // 		const authorData = await authorResponse.json();
-    // 		const categoriesResponse = await fetch(
-    // 			`${url}/wp-json/wp/v2/posts/${post.id}/categories/${post}`,
-    // 		);
-    // 		const categoriesData = await categoriesResponse.json();
-    // 		const featuredMediaResponse = await fetch(
-    // 			`${url}/wp-json/wp/v2/media/${post.featured_media}`,
-    // 		);
-    // 		const featuredMediaData = await featuredMediaResponse.json();
-    // 		return {
-    // 			...post,
-    // 			author: authorData.name,
-    // 			categories: categoriesData,
-    // 			featuredImage: featuredMediaData.source_url,
-    // 		};
-    // 	}),
-    // );
-    setPosts(data);
-  };
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
-    fetchPosts();
-  }, [sliderBlogUrl]);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "boilerplate"),
     initialOpen: true
@@ -245,10 +216,12 @@ const Edit = ({
         sliderDisplayArrows: userChoice
       });
     }
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_includes_sliderBlock_js__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    posts: posts,
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)()
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Disabled, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_8___default()), {
+    block: _block_json__WEBPACK_IMPORTED_MODULE_7__.name,
     attributes: attributes
-  }));
+  }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Edit);
 
@@ -516,6 +489,16 @@ module.exports = window["wp"]["i18n"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["primitives"];
+
+/***/ }),
+
+/***/ "@wordpress/server-side-render":
+/*!******************************************!*\
+  !*** external ["wp","serverSideRender"] ***!
+  \******************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["serverSideRender"];
 
 /***/ }),
 
