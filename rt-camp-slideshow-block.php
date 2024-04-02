@@ -42,7 +42,6 @@ if (version_compare(get_bloginfo('version'), '5.8', '>=')) {
 	add_filter('block_categories', 'register_block_category');
 }
 
-// Register custom REST API endpoint
 add_action('rest_api_init', 'register_custom_endpoint');
 
 function register_custom_endpoint()
@@ -61,9 +60,7 @@ function fetch_posts_api_callback($request)
 	$default_site_url = get_bloginfo('url');
 	$slider_blog_url = isset($params['sliderBlogUrl']) ? $params['sliderBlogUrl'] : $default_site_url;
 
-	// Check if the URL is provided and it doesn't start with "https://"
 	if (!empty($slider_blog_url) && strpos($slider_blog_url, 'https://') !== 0 && $slider_blog_url !== $default_site_url) {
-		// If it doesn't start with "https://" and it's not the default site URL, add it
 		$slider_blog_url = 'https://' . $slider_blog_url;
 	}
 

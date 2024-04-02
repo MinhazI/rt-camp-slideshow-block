@@ -1,7 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { InspectorControls } from "@wordpress/block-editor";
 import {
-	Disabled,
+	Button,
 	PanelBody,
 	TextControl,
 	ToggleControl,
@@ -28,6 +28,7 @@ const Edit = ({ attributes, setAttributes }) => {
 
 	const [posts, setPosts] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
+	const [url, setUrl] = useState(sliderBlogUrl);
 
 	const fetchPosts = async () => {
 		setIsLoading(true);
@@ -76,12 +77,22 @@ const Edit = ({ attributes, setAttributes }) => {
 				<PanelBody title={__("Settings", "boilerplate")} initialOpen={true}>
 					<TextControl
 						label="Blog link"
-						value={sliderBlogUrl}
+						value={url}
 						onChange={(newUrl) => {
-							setAttributes({ sliderBlogUrl: newUrl });
+							setUrl(newUrl);
 						}}
-						help="Please enter the link you want us to extract the posts from. Keep this empty to use your current website link. Format [wptravern.com] or [rtcamp.com]"
+						help="Please enter the link you want us to extract the posts from. Keep this empty to use your current website link. Format [wptavern.com] or [rtcamp.com]"
 					/>
+					<Button
+						variant="primary"
+						onClick={() => setAttributes({ sliderBlogUrl: url })}
+						style={{
+							marginBottom: 50,
+						}}
+						disabled={sliderBlogUrl == url}
+					>
+						Save link
+					</Button>
 					<ToggleControl
 						label="Show post title"
 						help={sliderDisplayTitle ? "Showing title" : "Not showing title"}
@@ -150,18 +161,6 @@ const Edit = ({ attributes, setAttributes }) => {
 						checked={sliderDisplayCategories}
 						onChange={(userChoice) => {
 							setAttributes({ sliderDisplayCategories: userChoice });
-						}}
-					/>
-					<ToggleControl
-						label="Show navigation"
-						help={
-							sliderDisplayNavigation
-								? "Show slider navigation"
-								: "Hide slider navigation"
-						}
-						checked={sliderDisplayNavigation}
-						onChange={(userChoice) => {
-							setAttributes({ sliderDisplayNavigation: userChoice });
 						}}
 					/>
 					<ToggleControl

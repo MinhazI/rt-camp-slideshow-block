@@ -14,7 +14,6 @@ const SliderBlock = ({ posts, attributes, loading }) => {
 		sliderDisplayCategories,
 		sliderAutoSlide,
 		sliderDisplayArrows,
-		sliderDisplayNavigation,
 		sliderShowReadMoreButton,
 	} = attributes;
 	const [currentSlide, setCurrentSlide] = useState(0);
@@ -61,7 +60,7 @@ const SliderBlock = ({ posts, attributes, loading }) => {
 
 	return (
 		<div {...useBlockProps()}>
-			{loading && (
+			{loading ? (
 				<div
 					style={{
 						padding: 20,
@@ -82,8 +81,7 @@ const SliderBlock = ({ posts, attributes, loading }) => {
 						the link again.
 					</p>
 				</div>
-			)}
-			{posts && posts.length ? (
+			) : posts && posts.length ? (
 				<div className="slideshow-container">
 					{posts.map((post, index) => (
 						<div
@@ -91,9 +89,6 @@ const SliderBlock = ({ posts, attributes, loading }) => {
 							className={`slide ${index === currentSlide ? "active" : ""}`}
 							style={{
 								display: index === currentSlide ? "block" : "none",
-								backgroundImage: sliderDisplayImage
-									? `url(${post.featuredImage})`
-									: "none",
 								backgroundSize: "cover",
 								backgroundPosition: "center",
 								position: "relative",
@@ -141,7 +136,7 @@ const SliderBlock = ({ posts, attributes, loading }) => {
 						</>
 					)}
 
-					{sliderDisplayNavigation && (
+					{sliderAutoSlide && (
 						<div className="navigation-container">
 							{posts.map((post, index) => (
 								<span

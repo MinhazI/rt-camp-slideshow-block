@@ -100,7 +100,6 @@ const SliderBlock = ({
     sliderDisplayCategories,
     sliderAutoSlide,
     sliderDisplayArrows,
-    sliderDisplayNavigation,
     sliderShowReadMoreButton
   } = attributes;
   const [currentSlide, setCurrentSlide] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
@@ -139,7 +138,7 @@ const SliderBlock = ({
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)()
-  }, loading && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, loading ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     style: {
       padding: 20,
       textAlign: "center"
@@ -150,14 +149,13 @@ const SliderBlock = ({
       flexDirection: "row",
       justifyContent: "center"
     }
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Spinner, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Loading posts from the link. If the posts aren't showing, try adding the link again.")), posts && posts.length ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Spinner, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Loading posts from the link. If the posts aren't showing, try adding the link again.")) : posts && posts.length ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "slideshow-container"
   }, posts.map((post, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     key: index,
     className: `slide ${index === currentSlide ? "active" : ""}`,
     style: {
       display: index === currentSlide ? "block" : "none",
-      backgroundImage: sliderDisplayImage ? `url(${post.featuredImage})` : "none",
       backgroundSize: "cover",
       backgroundPosition: "center",
       position: "relative"
@@ -185,7 +183,7 @@ const SliderBlock = ({
     onClick: nextSlide
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Icon, {
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }))), sliderDisplayNavigation && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }))), sliderAutoSlide && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "navigation-container"
   }, posts.map((post, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     key: index,
@@ -245,6 +243,7 @@ const Edit = ({
   } = attributes;
   const [posts, setPosts] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)([]);
   const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)(false);
+  const [url, setUrl] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)(sliderBlogUrl);
   const fetchPosts = async () => {
     setIsLoading(true);
     try {
@@ -286,14 +285,21 @@ const Edit = ({
     initialOpen: true
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
     label: "Blog link",
-    value: sliderBlogUrl,
+    value: url,
     onChange: newUrl => {
-      setAttributes({
-        sliderBlogUrl: newUrl
-      });
+      setUrl(newUrl);
     },
-    help: "Please enter the link you want us to extract the posts from. Keep this empty to use your current website link. Format [wptravern.com] or [rtcamp.com]"
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    help: "Please enter the link you want us to extract the posts from. Keep this empty to use your current website link. Format [wptavern.com] or [rtcamp.com]"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    variant: "primary",
+    onClick: () => setAttributes({
+      sliderBlogUrl: url
+    }),
+    style: {
+      marginBottom: 50
+    },
+    disabled: sliderBlogUrl == url
+  }, "Save link"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
     label: "Show post title",
     help: sliderDisplayTitle ? "Showing title" : "Not showing title",
     checked: sliderDisplayTitle,
@@ -354,15 +360,6 @@ const Edit = ({
     onChange: userChoice => {
       setAttributes({
         sliderDisplayCategories: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show navigation",
-    help: sliderDisplayNavigation ? "Show slider navigation" : "Hide slider navigation",
-    checked: sliderDisplayNavigation,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayNavigation: userChoice
       });
     }
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {

@@ -69,11 +69,11 @@ if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200
                                     <?php
                                     $author_response = wp_remote_get($slider_blog_url . '/wp-json/wp/v2/users/' . $post->author);
                                     if (is_wp_error($author_response)) {
-                                        $author = "";
+                                        echo "";
                                     } else {
                                         $author = json_decode(wp_remote_retrieve_body($author_response), true);
+                                        echo $author["name"];
                                     }
-                                    echo $author["name"];
                                     ?>
                                 </p>
                             </div>
@@ -112,7 +112,7 @@ if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200
             <a class="prev"><span class="dashicons dashicons-arrow-left-alt"></span></a>
             <a class="next"><span class="dashicons dashicons-arrow-right-alt"></span></a>
         <?php endif; ?>
-        <?php if ($attributes['sliderDisplayNavigation']) : ?>
+        <?php if ($attributes['sliderAutoSlide']) : ?>
             <div class="navigation-container">
                 <?php foreach ($posts as $post) : setup_postdata($post); ?>
                     <span class="navigation"></span>
