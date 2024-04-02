@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useBlockProps } from "@wordpress/block-editor";
-import { Icon } from "@wordpress/components";
+import { Icon, Spinner } from "@wordpress/components";
 import { arrowLeft, arrowRight } from "@wordpress/icons";
 
-const SliderBlock = ({ posts, attributes }) => {
+const SliderBlock = ({ posts, attributes, loading }) => {
 	const {
 		sliderBlogUrl,
 		sliderDisplayTitle,
@@ -61,6 +61,28 @@ const SliderBlock = ({ posts, attributes }) => {
 
 	return (
 		<div {...useBlockProps()}>
+			{loading && (
+				<div
+					style={{
+						padding: 20,
+						textAlign: "center",
+					}}
+				>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "row",
+							justifyContent: "center",
+						}}
+					>
+						<Spinner />
+					</div>
+					<p>
+						Loading posts from the link. If the posts aren't showing, try adding
+						the link again.
+					</p>
+				</div>
+			)}
 			{posts && posts.length ? (
 				<div className="slideshow-container">
 					{posts.map((post, index) => (

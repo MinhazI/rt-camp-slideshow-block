@@ -27,17 +27,43 @@ const Edit = ({ attributes, setAttributes }) => {
 	} = attributes;
 
 	const [posts, setPosts] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const fetchPosts = async () => {
-		const response = await fetch(`${sliderBlogUrl}/wp-json/wp/v2/posts`, {
-			method: "GET",
-			redirect: "follow",
-		});
-		if (!response.ok) {
-			throw new Error("Failed to fetch posts");
+		setIsLoading(true);
+		try {
+			let apiUrl = sliderBlogUrl.trim(); // Trim whitespace
+
+			if (apiUrl != "") {
+				const response = await fetch(
+					"/wp-json/rtcamp-slideshow/v1/fetch-posts",
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ sliderBlogUrl: apiUrl }), // Use the modified URL in the request body
+					},
+				);
+
+				if (!response.ok) {
+					throw new Error("Failed to fetch posts");
+				}
+
+				const data = await response.json();
+				setPosts(data.posts); // Assuming 'posts' is the key for posts data in the response
+			} else {
+				const response = await fetch("/wp-json/wp/v2/posts");
+				if (!response.ok) {
+					throw new Error("Failed to fetch posts");
+				}
+				const data = await response.json();
+				setPosts(data);
+			}
+		} catch (error) {
+			console.error("Error fetching posts:", error);
 		}
-		const data = await response.json();
-		setPosts(data);
+		setIsLoading(false);
 	};
 
 	useEffect(() => {
@@ -54,7 +80,7 @@ const Edit = ({ attributes, setAttributes }) => {
 						onChange={(newUrl) => {
 							setAttributes({ sliderBlogUrl: newUrl });
 						}}
-						help="Please enter the link you want us to extract the posts from. Keep this empty to use your websites."
+						help="Please enter the link you want us to extract the posts from. Keep this empty to use your current website link. Format [wptravern.com] or [rtcamp.com]"
 					/>
 					<ToggleControl
 						label="Show post title"
@@ -160,7 +186,7 @@ const Edit = ({ attributes, setAttributes }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<SliderBlock posts={posts} attributes={attributes} />
+			<SliderBlock posts={posts} attributes={attributes} loading={isLoading} />
 		</>
 	);
 };

@@ -87,7 +87,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const SliderBlock = ({
   posts,
-  attributes
+  attributes,
+  loading
 }) => {
   const {
     sliderBlogUrl,
@@ -138,7 +139,18 @@ const SliderBlock = ({
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)()
-  }, posts && posts.length ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, loading && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      padding: 20,
+      textAlign: "center"
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center"
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Spinner, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Loading posts from the link. If the posts aren't showing, try adding the link again.")), posts && posts.length ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "slideshow-container"
   }, posts.map((post, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     key: index,
@@ -232,16 +244,39 @@ const Edit = ({
     sliderShowReadMoreButton
   } = attributes;
   const [posts, setPosts] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)([]);
+  const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)(false);
   const fetchPosts = async () => {
-    const response = await fetch(`${sliderBlogUrl}/wp-json/wp/v2/posts`, {
-      method: "GET",
-      redirect: "follow"
-    });
-    if (!response.ok) {
-      throw new Error("Failed to fetch posts");
+    setIsLoading(true);
+    try {
+      let apiUrl = sliderBlogUrl.trim(); // Trim whitespace
+
+      if (apiUrl != "") {
+        const response = await fetch("/wp-json/rtcamp-slideshow/v1/fetch-posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            sliderBlogUrl: apiUrl
+          }) // Use the modified URL in the request body
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch posts");
+        }
+        const data = await response.json();
+        setPosts(data.posts); // Assuming 'posts' is the key for posts data in the response
+      } else {
+        const response = await fetch("/wp-json/wp/v2/posts");
+        if (!response.ok) {
+          throw new Error("Failed to fetch posts");
+        }
+        const data = await response.json();
+        setPosts(data);
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
     }
-    const data = await response.json();
-    setPosts(data);
+    setIsLoading(false);
   };
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
     fetchPosts();
@@ -257,7 +292,7 @@ const Edit = ({
         sliderBlogUrl: newUrl
       });
     },
-    help: "Please enter the link you want us to extract the posts from. Keep this empty to use your websites."
+    help: "Please enter the link you want us to extract the posts from. Keep this empty to use your current website link. Format [wptravern.com] or [rtcamp.com]"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
     label: "Show post title",
     help: sliderDisplayTitle ? "Showing title" : "Not showing title",
@@ -350,7 +385,8 @@ const Edit = ({
     }
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_assets_slider_block_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
     posts: posts,
-    attributes: attributes
+    attributes: attributes,
+    loading: isLoading
   }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Edit);
