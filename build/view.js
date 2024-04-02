@@ -5,7 +5,7 @@ var __webpack_exports__ = {};
   \*********************/
 var slideIndex = 1;
 showSlides(slideIndex);
-function plusSlides(n) {
+function navigateSlides(n) {
   showSlides(slideIndex += n);
 }
 function currentSlide(n) {
@@ -32,9 +32,56 @@ function showSlides(n) {
 }
 window.onload = function () {
   setInterval(function () {
-    plusSlides(1);
-  }, 3000);
+    navigateSlides(1);
+  }, 7000);
 };
+document.addEventListener("DOMContentLoaded", function () {
+  const prevButton = document.querySelector(".prev");
+  const nextButton = document.querySelector(".next");
+  if (prevButton && nextButton) {
+    prevButton.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default link behavior
+      navigateSlides(-1);
+    });
+    nextButton.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default link behavior
+      navigateSlides(1);
+    });
+  }
+  const navigationItems = document.querySelectorAll(".navigation-container .navigation");
+  if (navigationItems) {
+    navigationItems.forEach(function (item, index) {
+      item.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent the default link behavior
+        currentSlide(index + 1); // Adjust index to start from 1
+      });
+    });
+  }
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowLeft") {
+      navigateSlides(-1);
+    } else if (event.key === "ArrowRight") {
+      navigateSlides(1);
+    }
+  });
+  let touchStartX = 0;
+  let touchEndX = 0;
+  document.addEventListener("touchstart", function (event) {
+    touchStartX = event.touches[0].clientX;
+  });
+  document.addEventListener("touchend", function (event) {
+    touchEndX = event.changedTouches[0].clientX;
+    handleSwipe();
+  });
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    if (touchStartX - touchEndX > swipeThreshold) {
+      navigateSlides(1);
+    } else if (touchEndX - touchStartX > swipeThreshold) {
+      navigateSlides(-1);
+    }
+  }
+});
 /******/ })()
 ;
 //# sourceMappingURL=view.js.map

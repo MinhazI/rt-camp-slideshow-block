@@ -9,7 +9,8 @@
   "description": "Gutenberg Slideshow Block for WordPress Posts assignment from rtCamp.",
   "example": {},
   "supports": {
-    "html": false
+    "html": false,
+    "alignWide": true
   },
   "attributes": {
     "sliderBlogUrl": {

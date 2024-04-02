@@ -7,10 +7,9 @@ import {
 	ToggleControl,
 } from "@wordpress/components";
 import "./editor.scss";
-import { useBlockProps } from "@wordpress/block-editor";
 
-import metadata from "./block.json";
-import ServerSideRender from "@wordpress/server-side-render";
+import { useEffect, useState } from "@wordpress/element";
+import SliderBlock from "./assets/slider-block.js";
 
 const Edit = ({ attributes, setAttributes }) => {
 	const {
@@ -26,6 +25,24 @@ const Edit = ({ attributes, setAttributes }) => {
 		sliderDisplayNavigation,
 		sliderShowReadMoreButton,
 	} = attributes;
+
+	const [posts, setPosts] = useState([]);
+
+	const fetchPosts = async () => {
+		const response = await fetch(`${sliderBlogUrl}/wp-json/wp/v2/posts`, {
+			method: "GET",
+			redirect: "follow",
+		});
+		if (!response.ok) {
+			throw new Error("Failed to fetch posts");
+		}
+		const data = await response.json();
+		setPosts(data);
+	};
+
+	useEffect(() => {
+		fetchPosts();
+	}, [sliderBlogUrl]);
 
 	return (
 		<>
@@ -143,9 +160,7 @@ const Edit = ({ attributes, setAttributes }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div {...useBlockProps()}>
-				<ServerSideRender block={metadata.name} attributes={attributes} />
-			</div>
+			<SliderBlock posts={posts} attributes={attributes} />
 		</>
 	);
 };

@@ -1,6 +1,6 @@
-.slider-block {
-	max-width: unset !important;
-}
+// .slider-block {
+// 	max-width: unset !important;
+// }
 
 .slideshow-container {
 	position: relative;
@@ -26,15 +26,11 @@
 		width: auto;
 		margin-top: -30px;
 		padding: 16px;
-		color: #888;
-		font-weight: bold;
-		font-size: 20px;
-		border-radius: 0 3px 3px 0;
+		color: #000000;
 		user-select: none;
 
 		&.next {
 			right: 0;
-			border-radius: 3px 0 0 3px;
 		}
 
 		&:hover {
@@ -59,8 +55,8 @@
 
 			&.active {
 				height: 8px;
-				width: 16px;
-				border-radius: 40%;
+				width: 25px;
+				border-radius: 10px;
 				background-color: #000000;
 			}
 
@@ -87,7 +83,23 @@
 			height: 100%;
 			background: rgba(255, 255, 255, 0.9);
 			pointer-events: none;
-			// Allow clicks to go through the overlay
+		}
+	}
+
+	.readmore-btn {
+		color: #ffffff;
+		background-color: #000000;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		padding-left: 40px;
+		padding-right: 40px;
+		top: 40px;
+		transition: color 0.3s, background-color 0.3s, border 0.3s;
+
+		&:hover {
+			color: #000000;
+			background-color: #ffffff;
+			border: 3px solid #000000
 		}
 	}
 }
