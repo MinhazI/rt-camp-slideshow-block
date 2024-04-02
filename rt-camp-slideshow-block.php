@@ -75,12 +75,19 @@ function render_slider_block($posts, $attributes)
 		<div class="slideshow-container">
 			<?php foreach ($posts as $post) : setup_postdata($post);
 				$featured_image_response = wp_remote_get($sliderBlogUrl . 'wp-json/wp/v2/media/' . $post->featured_media);
-				$featured_image_response_array = json_decode($featured_image_response['body'], true);
-				if (!empty($featured_image_response_array['guid'])) {
-					$featured_image_url = $featured_image_response_array['guid']['rendered'];
-				} else {
+
+				if (is_wp_error($featured_image_response)) {
 					$featured_image_url = "none";
+				} else {
+					$featured_image_response_array = json_decode(wp_remote_retrieve_body($featured_image_response), true);
+
+					if (!empty($featured_image_response_array['guid']['rendered'])) {
+						$featured_image_url = $featured_image_response_array['guid']['rendered'];
+					} else {
+						$featured_image_url = "none";
+					}
 				}
+
 			?>
 				<div class="slide" style="<?php if ($attributes['sliderDisplayImage']) : ?>background-image: url('<?php echo $featured_image_url;
 																												endif; ?>'); background-size: cover; background-position: center; position: relative">

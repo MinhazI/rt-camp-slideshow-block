@@ -9,14 +9,16 @@
   position: relative;
   background-color: transparent;
 }
-
 .slideshow-container .slide {
   padding: 80px;
   text-align: center;
   display: none;
   min-height: 400px;
 }
-
+.slideshow-container .slide > * {
+  z-index: 2;
+  position: relative;
+}
 .slideshow-container .prev,
 .slideshow-container .next {
   cursor: pointer;
@@ -33,25 +35,21 @@
      -moz-user-select: none;
           user-select: none;
 }
-
-.slideshow-container .next {
-  position: absolute;
+.slideshow-container .prev.next,
+.slideshow-container .next.next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
-
 .slideshow-container .prev:hover,
 .slideshow-container .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
 }
-
 .slideshow-container .navigation-container {
   text-align: center;
   padding: 20px;
 }
-
-.slideshow-container .navigation {
+.slideshow-container .navigation-container .navigation {
   cursor: pointer;
   height: 8px;
   width: 8px;
@@ -61,20 +59,29 @@
   transition: background-color 0.6s ease;
   border-radius: 100%;
 }
-
-.slideshow-container .navigation.active {
+.slideshow-container .navigation-container .navigation.active {
   height: 8px;
   width: 16px;
   border-radius: 40%;
 }
-
-.slideshow-container .navigation.active,
-.slideshow-container .navigation:hover {
+.slideshow-container .navigation-container .navigation:hover {
   background-color: #000000;
 }
-
 .slideshow-container a:where(:not(.wp-element-button)) {
   text-decoration: none !important;
+}
+.slideshow-container .slide {
+  position: relative;
+}
+.slideshow-container .slide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  pointer-events: none;
 }
 
 /*# sourceMappingURL=style-index.css.map*/
