@@ -1,25 +1,98 @@
-/**
- * Use this file for JavaScript code that you want to run in the front-end
- * on posts/pages that contain this block.
- *
- * When this file is defined as the value of the `viewScript` property
- * in `block.json` it will be enqueued on the front end of the site.
- *
- * Example:
- *
- * ```js
- * {
- *   "viewScript": "file:./view.js"
- * }
- * ```
- *
- * If you're not making any changes to this file because your project doesn't need any
- * JavaScript running in the front-end, then you should delete this file and remove
- * the `viewScript` property from `block.json`.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
- */
+var slideIndex = 1;
+showSlides(slideIndex);
 
-/* eslint-disable no-console */
-console.log("Hello World!");
-/* eslint-enable no-console */
+function navigateSlides(n) {
+	showSlides((slideIndex += n));
+}
+
+function currentSlide(n) {
+	showSlides((slideIndex = n));
+}
+
+function showSlides(n) {
+	var i;
+	var slides = document.getElementsByClassName("slide");
+	var navigationDots = document.getElementsByClassName("navigation");
+	if (n > slides.length) {
+		slideIndex = 1;
+	}
+	if (n < 1) {
+		slideIndex = slides.length;
+	}
+	for (i = 0; i < slides.length; i++) {
+		slides[i].style.display = "none";
+	}
+	for (i = 0; i < navigationDots.length; i++) {
+		navigationDots[i].className = navigationDots[i].className.replace(
+			" active",
+			"",
+		);
+	}
+	slides[slideIndex - 1].style.display = "block";
+	navigationDots[slideIndex - 1].className += " active";
+}
+
+window.onload = function () {
+	setInterval(function () {
+		navigateSlides(1);
+	}, 7000);
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+	const prevButton = document.querySelector(".prev");
+	const nextButton = document.querySelector(".next");
+
+	if (prevButton && nextButton) {
+		prevButton.addEventListener("click", function (event) {
+			event.preventDefault(); // Prevent the default link behavior
+			navigateSlides(-1);
+		});
+
+		nextButton.addEventListener("click", function (event) {
+			event.preventDefault(); // Prevent the default link behavior
+			navigateSlides(1);
+		});
+	}
+
+	const navigationItems = document.querySelectorAll(
+		".navigation-container .navigation",
+	);
+
+	if (navigationItems) {
+		navigationItems.forEach(function (item, index) {
+			item.addEventListener("click", function (event) {
+				event.preventDefault(); // Prevent the default link behavior
+				currentSlide(index + 1); // Adjust index to start from 1
+			});
+		});
+	}
+
+	document.addEventListener("keydown", function (event) {
+		if (event.key === "ArrowLeft") {
+			navigateSlides(-1);
+		} else if (event.key === "ArrowRight") {
+			navigateSlides(1);
+		}
+	});
+
+	let touchStartX = 0;
+	let touchEndX = 0;
+
+	document.addEventListener("touchstart", function (event) {
+		touchStartX = event.touches[0].clientX;
+	});
+
+	document.addEventListener("touchend", function (event) {
+		touchEndX = event.changedTouches[0].clientX;
+		handleSwipe();
+	});
+
+	function handleSwipe() {
+		const swipeThreshold = 50;
+		if (touchStartX - touchEndX > swipeThreshold) {
+			navigateSlides(1);
+		} else if (touchEndX - touchStartX > swipeThreshold) {
+			navigateSlides(-1);
+		}
+	}
+});

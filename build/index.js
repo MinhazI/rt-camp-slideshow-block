@@ -62,175 +62,10 @@ const arrowRight = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpre
 
 /***/ }),
 
-/***/ "./src/edit.js":
-/*!*********************!*\
-  !*** ./src/edit.js ***!
-  \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
-/* harmony import */ var _includes_sliderBlock_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./includes/sliderBlock.js */ "./src/includes/sliderBlock.js");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./block.json */ "./src/block.json");
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_8__);
-
-
-
-
-
-
-
-
-
-
-const Edit = ({
-  attributes,
-  setAttributes
-}) => {
-  const {
-    sliderBlogUrl,
-    sliderDisplayTitle,
-    sliderDisplayExcerpt,
-    sliderDisplayImage,
-    sliderDisplayDate,
-    sliderDisplayAuthor,
-    sliderDisplayCategories,
-    sliderAutoSlide,
-    sliderDisplayArrows,
-    sliderDisplayNavigation,
-    sliderShowReadMoreButton
-  } = attributes;
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "boilerplate"),
-    initialOpen: true
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: "Blog link",
-    value: sliderBlogUrl,
-    onChange: newUrl => {
-      setAttributes({
-        sliderBlogUrl: newUrl
-      });
-    },
-    help: "Please enter the link you want us to extract the posts from. Keep this empty to use your websites."
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show post title",
-    help: sliderDisplayTitle ? "Showing title" : "Not showing title",
-    checked: sliderDisplayTitle,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayTitle: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show excerpt",
-    help: sliderDisplayExcerpt ? "Showing excerpt" : "Not showing excerpt",
-    checked: sliderDisplayExcerpt,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayExcerpt: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show featured image",
-    help: sliderDisplayImage ? "Showing featured image" : "Not showing featured image",
-    checked: sliderDisplayImage,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayImage: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show date",
-    help: sliderDisplayDate ? "Showing date" : "Not showing date",
-    checked: sliderDisplayDate,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayDate: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show author",
-    help: sliderDisplayAuthor ? "Showing author" : "Not showing author",
-    checked: sliderDisplayAuthor,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayAuthor: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show read more button",
-    help: sliderShowReadMoreButton ? "Showing read more button" : "Not showing read more button",
-    checked: sliderShowReadMoreButton,
-    onChange: userChoice => {
-      setAttributes({
-        sliderShowReadMoreButton: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show categories",
-    help: sliderDisplayCategories ? "Showing categories" : "Not showing categories",
-    checked: sliderDisplayCategories,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayCategories: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show navigation",
-    help: sliderDisplayNavigation ? "Show slider navigation" : "Hide slider navigation",
-    checked: sliderDisplayNavigation,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayNavigation: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Auto slide",
-    help: sliderAutoSlide ? "Slider will auto slide" : "Slider will not auto slide",
-    checked: sliderAutoSlide,
-    onChange: userChoice => {
-      setAttributes({
-        sliderAutoSlide: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Slider arrows",
-    help: sliderAutoSlide ? "Show slider arrows" : "Hide slider arrows",
-    checked: sliderDisplayArrows,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayArrows: userChoice
-      });
-    }
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)()
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Disabled, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_8___default()), {
-    block: _block_json__WEBPACK_IMPORTED_MODULE_7__.name,
-    attributes: attributes
-  }))));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Edit);
-
-/***/ }),
-
-/***/ "./src/includes/sliderBlock.js":
-/*!*************************************!*\
-  !*** ./src/includes/sliderBlock.js ***!
-  \*************************************/
+/***/ "./src/assets/slider-block.js":
+/*!************************************!*\
+  !*** ./src/assets/slider-block.js ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -350,6 +185,178 @@ const SliderBlock = ({
 
 /***/ }),
 
+/***/ "./src/edit.js":
+/*!*********************!*\
+  !*** ./src/edit.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _assets_slider_block_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./assets/slider-block.js */ "./src/assets/slider-block.js");
+
+
+
+
+
+
+
+const Edit = ({
+  attributes,
+  setAttributes
+}) => {
+  const {
+    sliderBlogUrl,
+    sliderDisplayTitle,
+    sliderDisplayExcerpt,
+    sliderDisplayImage,
+    sliderDisplayDate,
+    sliderDisplayAuthor,
+    sliderDisplayCategories,
+    sliderAutoSlide,
+    sliderDisplayArrows,
+    sliderDisplayNavigation,
+    sliderShowReadMoreButton
+  } = attributes;
+  const [posts, setPosts] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)([]);
+  const fetchPosts = async () => {
+    const response = await fetch(`${sliderBlogUrl}/wp-json/wp/v2/posts`, {
+      method: "GET",
+      redirect: "follow"
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch posts");
+    }
+    const data = await response.json();
+    setPosts(data);
+  };
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
+    fetchPosts();
+  }, [sliderBlogUrl]);
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "boilerplate"),
+    initialOpen: true
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    label: "Blog link",
+    value: sliderBlogUrl,
+    onChange: newUrl => {
+      setAttributes({
+        sliderBlogUrl: newUrl
+      });
+    },
+    help: "Please enter the link you want us to extract the posts from. Keep this empty to use your websites."
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show post title",
+    help: sliderDisplayTitle ? "Showing title" : "Not showing title",
+    checked: sliderDisplayTitle,
+    onChange: userChoice => {
+      setAttributes({
+        sliderDisplayTitle: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show excerpt",
+    help: sliderDisplayExcerpt ? "Showing excerpt" : "Not showing excerpt",
+    checked: sliderDisplayExcerpt,
+    onChange: userChoice => {
+      setAttributes({
+        sliderDisplayExcerpt: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show featured image",
+    help: sliderDisplayImage ? "Showing featured image" : "Not showing featured image",
+    checked: sliderDisplayImage,
+    onChange: userChoice => {
+      setAttributes({
+        sliderDisplayImage: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show date",
+    help: sliderDisplayDate ? "Showing date" : "Not showing date",
+    checked: sliderDisplayDate,
+    onChange: userChoice => {
+      setAttributes({
+        sliderDisplayDate: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show author",
+    help: sliderDisplayAuthor ? "Showing author" : "Not showing author",
+    checked: sliderDisplayAuthor,
+    onChange: userChoice => {
+      setAttributes({
+        sliderDisplayAuthor: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show read more button",
+    help: sliderShowReadMoreButton ? "Showing read more button" : "Not showing read more button",
+    checked: sliderShowReadMoreButton,
+    onChange: userChoice => {
+      setAttributes({
+        sliderShowReadMoreButton: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show categories",
+    help: sliderDisplayCategories ? "Showing categories" : "Not showing categories",
+    checked: sliderDisplayCategories,
+    onChange: userChoice => {
+      setAttributes({
+        sliderDisplayCategories: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show navigation",
+    help: sliderDisplayNavigation ? "Show slider navigation" : "Hide slider navigation",
+    checked: sliderDisplayNavigation,
+    onChange: userChoice => {
+      setAttributes({
+        sliderDisplayNavigation: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Auto slide",
+    help: sliderAutoSlide ? "Slider will auto slide" : "Slider will not auto slide",
+    checked: sliderAutoSlide,
+    onChange: userChoice => {
+      setAttributes({
+        sliderAutoSlide: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Slider arrows",
+    help: sliderAutoSlide ? "Show slider arrows" : "Hide slider arrows",
+    checked: sliderDisplayArrows,
+    onChange: userChoice => {
+      setAttributes({
+        sliderDisplayArrows: userChoice
+      });
+    }
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_assets_slider_block_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    posts: posts,
+    attributes: attributes
+  }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Edit);
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -362,37 +369,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
 /* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/block.json");
-/**
- * Registers a new block provided a unique name and an object defining its behavior.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
- */
-
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * All files containing `style` keyword are bundled together. The code used
- * gets applied both to the front of your site and to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-
-
-/**
- * Internal dependencies
- */
 
 
 
-/**
- * Every block starts by registering a new block type definition.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
- */
+
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_3__.name, {
-  /**
-   * @see ./edit.js
-   */
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 
@@ -492,23 +473,13 @@ module.exports = window["wp"]["primitives"];
 
 /***/ }),
 
-/***/ "@wordpress/server-side-render":
-/*!******************************************!*\
-  !*** external ["wp","serverSideRender"] ***!
-  \******************************************/
-/***/ ((module) => {
-
-module.exports = window["wp"]["serverSideRender"];
-
-/***/ }),
-
 /***/ "./src/block.json":
 /*!************************!*\
   !*** ./src/block.json ***!
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"minhaz/rt-camp-slideshow-block","version":"0.1.0","title":"rtCamp Slideshow Block","category":"rtcamp-assignment-category","icon":"slides","description":"Gutenberg Slideshow Block for WordPress Posts assignment from rtCamp.","example":{},"supports":{"html":false},"attributes":{"sliderBlogUrl":{"type":"string","default":"https://www.wptavern.com"},"sliderDisplayTitle":{"type":"boolean","default":true},"sliderDisplayExcerpt":{"type":"boolean","default":true},"sliderDisplayImage":{"type":"boolean","default":true},"sliderDisplayDate":{"type":"boolean","default":true},"sliderDisplayAuthor":{"type":"boolean","default":true},"sliderDisplayCategories":{"type":"boolean","default":true},"sliderAutoSlide":{"type":"boolean","default":true},"sliderDisplayArrows":{"type":"boolean","default":true},"sliderDisplayNavigation":{"type":"boolean","default":true},"sliderShowReadMoreButton":{"type":"boolean","default":true}},"textdomain":"rt-camp-slideshow-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"minhaz/rt-camp-slideshow-block","version":"0.1.0","title":"rtCamp Slideshow Block","category":"rtcamp-assignment-category","icon":"slides","description":"Gutenberg Slideshow Block for WordPress Posts assignment from rtCamp.","example":{},"supports":{"html":false,"alignWide":true},"attributes":{"sliderBlogUrl":{"type":"string","default":"https://www.wptavern.com"},"sliderDisplayTitle":{"type":"boolean","default":true},"sliderDisplayExcerpt":{"type":"boolean","default":true},"sliderDisplayImage":{"type":"boolean","default":true},"sliderDisplayDate":{"type":"boolean","default":true},"sliderDisplayAuthor":{"type":"boolean","default":true},"sliderDisplayCategories":{"type":"boolean","default":true},"sliderAutoSlide":{"type":"boolean","default":true},"sliderDisplayArrows":{"type":"boolean","default":true},"sliderDisplayNavigation":{"type":"boolean","default":true},"sliderShowReadMoreButton":{"type":"boolean","default":true}},"textdomain":"rt-camp-slideshow-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ })
 
