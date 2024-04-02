@@ -1,3 +1,7 @@
+.slider-block {
+	max-width: unset !important;
+}
+
 .slideshow-container {
 	position: relative;
 	background-color: transparent;
@@ -7,6 +11,7 @@
 	padding: 80px;
 	text-align: center;
 	display: none;
+	min-height: 400px;
 }
 
 .slideshow-container .prev,

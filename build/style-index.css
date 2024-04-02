@@ -1,6 +1,10 @@
 /*!***************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/style.scss ***!
   \***************************************************************************************************************************************************************************************************************************************/
+.slider-block {
+  max-width: unset !important;
+}
+
 .slideshow-container {
   position: relative;
   background-color: transparent;
@@ -10,6 +14,7 @@
   padding: 80px;
   text-align: center;
   display: none;
+  min-height: 400px;
 }
 
 .slideshow-container .prev,

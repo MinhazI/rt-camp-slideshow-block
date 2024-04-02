@@ -82,7 +82,8 @@ function render_slider_block($posts, $attributes)
 					$featured_image_url = "none";
 				}
 			?>
-				<div class="slide" style="background-image: url('<?php echo $featured_image_url ?>'); background-size: cover; background-position: center; position: relative">
+				<div class="slide" style="<?php if ($attributes['sliderDisplayImage']) : ?>background-image: url('<?php echo $featured_image_url;
+																												endif; ?>'); background-size: cover; background-position: center; position: relative">
 					<?php if ($attributes['sliderDisplayTitle']) : ?>
 						<h3><?php echo esc_html($post->title->rendered); ?></h3>
 					<?php endif; ?>
