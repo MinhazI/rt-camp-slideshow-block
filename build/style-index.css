@@ -6,10 +6,10 @@
   background-color: transparent;
 }
 .slideshow-container .slide {
-  padding: 80px;
   text-align: center;
   display: none;
   min-height: 400px;
+  padding: 80px;
 }
 .slideshow-container .slide > * {
   z-index: 2;
@@ -36,6 +36,12 @@
 .slideshow-container .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
+}
+.slideshow-container .prev .dashicons,
+.slideshow-container .prev .dashicons-before:before,
+.slideshow-container .next .dashicons,
+.slideshow-container .next .dashicons-before:before {
+  line-height: unset;
 }
 .slideshow-container .navigation-container {
   text-align: center;
@@ -73,16 +79,17 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.97);
   pointer-events: none;
 }
 .slideshow-container .readmore-btn {
   color: #ffffff;
   background-color: #000000;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
   top: 40px;
   transition: color 0.3s, background-color 0.3s, border 0.3s;
 }
@@ -90,6 +97,54 @@
   color: #000000;
   background-color: #ffffff;
   border: 3px solid #000000;
+}
+.slideshow-container .meta-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.slideshow-container .meta-data p,
+.slideshow-container .meta-data .categories {
+  margin-right: 10px;
+}
+.slideshow-container .categories,
+.slideshow-container .date,
+.slideshow-container .author {
+  display: flex;
+  align-items: center;
+}
+.slideshow-container .individual-categories {
+  margin-right: 5px;
+}
+.slideshow-container .meta-data span.dashicons {
+  margin-right: 5px;
+}
+@media screen and (max-width: 768px) {
+  .slideshow-container .meta-data {
+    flex-direction: column;
+    text-align: center;
+  }
+  .slideshow-container .meta-data p,
+  .slideshow-container .meta-data .categories,
+  .slideshow-container .meta-data .date,
+  .slideshow-container .meta-data .author {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+  .slideshow-container .categories,
+  .slideshow-container .date,
+  .slideshow-container .author {
+    flex-wrap: wrap;
+  }
+  .slideshow-container .slide {
+    padding: 50px;
+    padding-bottom: 80px;
+  }
+}
+.slideshow-container a:hover,
+.slideshow-container h2:hover {
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=style-index.css.map*/
