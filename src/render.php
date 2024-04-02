@@ -1,13 +1,17 @@
 <?php
 
-// Retrieve attributes
-$sliderBlogUrl = $attributes['sliderBlogUrl'];
+$default_site_url = get_bloginfo('url');
+$slider_blog_url = $attributes['sliderBlogUrl'] ? $attributes['sliderBlogUrl'] : $default_site_url;
 
-// Fetch posts from external URL
-$posts_response = wp_remote_get($sliderBlogUrl . '/wp-json/wp/v2/posts');
+if (!empty($slider_blog_url) && strpos($slider_blog_url, 'https://') !== 0 && $slider_blog_url !== $default_site_url) {
+    $slider_blog_url = 'https://' . $slider_blog_url;
+}
+
+$posts_response = wp_remote_get($slider_blog_url . '/wp-json/wp/v2/posts');
+
+
 if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200) {
     $posts = json_decode($posts_response['body']);
-    // Check if posts are fetched successfully
     if (empty($posts)) {
         return '<p>No posts found. Please check the blog link.</p>';
     }
@@ -19,7 +23,7 @@ if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200
 <div class="slider-block">
     <div class="slideshow-container">
         <?php foreach ($posts as $post) : setup_postdata($post);
-            $featured_image_response = wp_remote_get($sliderBlogUrl . '/wp-json/wp/v2/media/' . $post->featured_media);
+            $featured_image_response = wp_remote_get($slider_blog_url . '/wp-json/wp/v2/media/' . $post->featured_media);
 
             if (is_wp_error($featured_image_response)) {
                 $featured_image_url = "none";
@@ -63,7 +67,7 @@ if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200
                                 <span class="dashicons dashicons-admin-users"></span>
                                 <p>
                                     <?php
-                                    $author_response = wp_remote_get($sliderBlogUrl . '/wp-json/wp/v2/users/' . $post->author);
+                                    $author_response = wp_remote_get($slider_blog_url . '/wp-json/wp/v2/users/' . $post->author);
                                     if (is_wp_error($author_response)) {
                                         $author = "";
                                     } else {
@@ -79,7 +83,7 @@ if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200
                                 <span class="dashicons dashicons-category"></span>
                                 <?php
                                 foreach ($post->categories as $index => $category_id) {
-                                    $category_response = wp_remote_get($sliderBlogUrl . '/wp-json/wp/v2/categories/' . $category_id);
+                                    $category_response = wp_remote_get($slider_blog_url . '/wp-json/wp/v2/categories/' . $category_id);
                                     if (!is_wp_error($category_response) && $category_response['response']['code'] === 200) {
                                         $category = json_decode(wp_remote_retrieve_body($category_response), true);
                                         echo '<p class="individual-categories">' . $category['name'];
