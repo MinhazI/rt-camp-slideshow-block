@@ -37,21 +37,19 @@ if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200
                 }
             }
         ?>
-            <div class="slide" style="<?php if ($attributes['sliderDisplayImage']) : ?>background-image: url('<?php echo $featured_image_url;
-                                                                                                            endif; ?>'); background-size: cover; background-position: center; position: relative">
-                <?php if ($attributes['sliderDisplayImage']) : ?>
+            <div class="slide" style="<?php if ($attributes['sliderShowImage']) : ?>background-image: url('<?php echo $featured_image_url;
+                                                                                                        endif; ?>'); background-size: cover; background-position: center; position: relative">
+                <?php if ($attributes['sliderShowImage']) : ?>
                     <a href="<?php echo $post->link ?>" target="_blank" class="featured-image">
                         <img src="<?php echo $featured_image_url; ?>" alt="<?php echo esc_html($post->title->rendered); ?>" width="100%" />
                     </a>
                 <?php endif; ?>
                 <div class="slider-content">
-                    <?php if ($attributes['sliderDisplayTitle']) : ?>
-                        <a href="<?php echo $post->link ?>" target="_blank">
-                            <h2><?php echo esc_html($post->title->rendered); ?></h2>
-                        </a>
-                    <?php endif; ?>
+                    <a href="<?php echo $post->link ?>" target="_blank">
+                        <h2><?php echo esc_html($post->title->rendered); ?></h2>
+                    </a>
                     <div class="meta-data">
-                        <?php if ($attributes['sliderDisplayDate']) : ?>
+                        <?php if ($attributes['sliderShowDate']) : ?>
                             <div class="date">
                                 <span class="dashicons dashicons-calendar"></span>
                                 <p>
@@ -62,7 +60,7 @@ if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200
                                 </p>
                             </div>
                         <?php endif; ?>
-                        <?php if ($attributes['sliderDisplayAuthor']) : ?>
+                        <?php if ($attributes['sliderShowAuthor']) : ?>
                             <div class="author">
                                 <span class="dashicons dashicons-admin-users"></span>
                                 <p>
@@ -78,7 +76,7 @@ if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200
                                 </p>
                             </div>
                         <?php endif; ?>
-                        <?php if ($attributes['sliderDisplayCategories']) : ?>
+                        <?php if ($attributes['sliderShowCategories']) : ?>
                             <div class="categories">
                                 <span class="dashicons dashicons-category"></span>
                                 <?php
@@ -99,7 +97,7 @@ if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200
                             </div>
                         <?php endif; ?>
                     </div>
-                    <?php if ($attributes['sliderDisplayExcerpt']) : ?>
+                    <?php if ($attributes['sliderShowExcerpt']) : ?>
                         <p><?php echo $post->excerpt->rendered ?></p>
                     <?php endif; ?>
                     <?php if ($attributes['sliderShowReadMoreButton']) : ?>
@@ -108,7 +106,7 @@ if (!is_wp_error($posts_response) && $posts_response['response']['code'] === 200
                 </div>
             </div>
         <?php endforeach; ?>
-        <?php if ($attributes['sliderDisplayArrows']) : ?>
+        <?php if ($attributes['sliderShowArrows']) : ?>
             <a class="prev"><span class="dashicons dashicons-arrow-left-alt"></span></a>
             <a class="next"><span class="dashicons dashicons-arrow-right-alt"></span></a>
         <?php endif; ?>

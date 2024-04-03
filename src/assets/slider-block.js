@@ -5,14 +5,13 @@ import { Spinner } from "@wordpress/components";
 const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 	const {
 		sliderBlogUrl,
-		sliderDisplayTitle,
-		sliderDisplayExcerpt,
-		sliderDisplayImage,
-		sliderDisplayDate,
-		sliderDisplayAuthor,
-		sliderDisplayCategories,
+		sliderShowExcerpt,
+		sliderShowImage,
+		sliderShowDate,
+		sliderShowAuthor,
+		sliderShowCategories,
 		sliderAutoSlide,
-		sliderDisplayArrows,
+		sliderShowArrows,
 		sliderShowReadMoreButton,
 	} = attributes;
 	const [currentSlide, setCurrentSlide] = useState(0);
@@ -22,15 +21,19 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 	const [blogUrl, setBlogUrl] = useState(sliderBlogUrl);
 
 	const nextSlide = () => {
-		setCurrentSlide((prevSlide) =>
-			prevSlide === posts.length - 1 ? 0 : prevSlide + 1,
-		);
+		posts &&
+			posts.length &&
+			setCurrentSlide((prevSlide) =>
+				prevSlide === posts.length - 1 ? 0 : prevSlide + 1,
+			);
 	};
 
 	const prevSlide = () => {
-		setCurrentSlide((prevSlide) =>
-			prevSlide === 0 ? posts.length - 1 : prevSlide - 1,
-		);
+		posts &&
+			posts.length &&
+			setCurrentSlide((prevSlide) =>
+				prevSlide === 0 ? posts.length - 1 : prevSlide - 1,
+			);
 	};
 
 	const autoSlide = () => {
@@ -68,8 +71,6 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 				: "none";
 		} catch (error) {
 			return "none";
-		} finally {
-			setIsLoading(false);
 		}
 	};
 
@@ -87,8 +88,6 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 		} catch (error) {
 			console.error("Error fetching author:", error);
 			return "";
-		} finally {
-			setIsLoading(false);
 		}
 	};
 
@@ -118,7 +117,6 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 				? sliderBlogUrl
 				: "https://" + sliderBlogUrl,
 		);
-		setIsLoading(false);
 	}, [sliderBlogUrl]);
 
 	useEffect(() => {
@@ -186,7 +184,7 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 					>
 						<Spinner />
 					</div>
-					<p>Loading posts from the link. Please wait.</p>
+					<p>Loading slider from the link. Please wait.</p>
 				</div>
 			) : posts && posts.length ? (
 				<div className="slideshow-container">
@@ -196,7 +194,7 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 							className={`slide ${index === currentSlide ? "active" : ""}`}
 							style={{
 								display: index === currentSlide ? "block" : "none",
-								backgroundImage: sliderDisplayImage
+								backgroundImage: sliderShowImage
 									? `url(${featuredImageUrls[index]})`
 									: "none",
 								backgroundSize: "cover",
@@ -204,7 +202,7 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 								position: "relative",
 							}}
 						>
-							{sliderDisplayImage && (
+							{sliderShowImage && (
 								<a href={posts.link} target="_blank" className="featured-image">
 									<img
 										src={featuredImageUrls[index]}
@@ -214,15 +212,13 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 								</a>
 							)}
 							<div className="slider-content">
-								{sliderDisplayTitle && (
-									<a href={posts.link} target="_blank">
-										<h2
-											dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-										/>
-									</a>
-								)}
+								<a href={posts.link} target="_blank">
+									<h2
+										dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+									/>
+								</a>
 								<div className="meta-data">
-									{sliderDisplayDate && (
+									{sliderShowDate && (
 										<div className="date">
 											<span className="dashicons dashicons-calendar"></span>
 											<p>
@@ -234,13 +230,13 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 											</p>
 										</div>
 									)}
-									{sliderDisplayAuthor && (
+									{sliderShowAuthor && (
 										<div className="author">
 											<span className="dashicons dashicons-admin-users"></span>
 											{authorNames[index] ? <p>{authorNames[index]}</p> : ""}
 										</div>
 									)}
-									{sliderDisplayCategories && (
+									{sliderShowCategories && (
 										<div className="categories">
 											<span className="dashicons dashicons-category"></span>
 											{post.categories.map((categoryId, catIndex) => {
@@ -260,7 +256,7 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 									)}
 								</div>
 
-								{sliderDisplayExcerpt && (
+								{sliderShowExcerpt && (
 									<p
 										dangerouslySetInnerHTML={{
 											__html: truncateExcerpt(post.excerpt.rendered),
@@ -275,7 +271,7 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 							</div>
 						</div>
 					))}
-					{sliderDisplayArrows && (
+					{sliderShowArrows && (
 						<>
 							<a className="prev" onClick={prevSlide}>
 								<span className="dashicons dashicons-arrow-left-alt"></span>

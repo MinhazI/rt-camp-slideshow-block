@@ -17,27 +17,23 @@
 			"type": "string",
 			"default": "https://www.wptavern.com"
 		},
-		"sliderDisplayTitle": {
+		"sliderShowExcerpt": {
 			"type": "boolean",
 			"default": true
 		},
-		"sliderDisplayExcerpt": {
+		"sliderShowImage": {
 			"type": "boolean",
 			"default": true
 		},
-		"sliderDisplayImage": {
+		"sliderShowDate": {
 			"type": "boolean",
 			"default": true
 		},
-		"sliderDisplayDate": {
+		"sliderShowAuthor": {
 			"type": "boolean",
 			"default": true
 		},
-		"sliderDisplayAuthor": {
-			"type": "boolean",
-			"default": true
-		},
-		"sliderDisplayCategories": {
+		"sliderShowCategories": {
 			"type": "boolean",
 			"default": true
 		},
@@ -45,11 +41,11 @@
 			"type": "boolean",
 			"default": true
 		},
-		"sliderDisplayArrows": {
+		"sliderShowArrows": {
 			"type": "boolean",
 			"default": true
 		},
-		"sliderDisplayNavigation": {
+		"sliderShowNavigation": {
 			"type": "boolean",
 			"default": true
 		},

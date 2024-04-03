@@ -30,14 +30,13 @@ const SliderBlock = ({
 }) => {
   const {
     sliderBlogUrl,
-    sliderDisplayTitle,
-    sliderDisplayExcerpt,
-    sliderDisplayImage,
-    sliderDisplayDate,
-    sliderDisplayAuthor,
-    sliderDisplayCategories,
+    sliderShowExcerpt,
+    sliderShowImage,
+    sliderShowDate,
+    sliderShowAuthor,
+    sliderShowCategories,
     sliderAutoSlide,
-    sliderDisplayArrows,
+    sliderShowArrows,
     sliderShowReadMoreButton
   } = attributes;
   const [currentSlide, setCurrentSlide] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
@@ -46,10 +45,10 @@ const SliderBlock = ({
   const [categoryNames, setCategoryNames] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [blogUrl, setBlogUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(sliderBlogUrl);
   const nextSlide = () => {
-    setCurrentSlide(prevSlide => prevSlide === posts.length - 1 ? 0 : prevSlide + 1);
+    posts && posts.length && setCurrentSlide(prevSlide => prevSlide === posts.length - 1 ? 0 : prevSlide + 1);
   };
   const prevSlide = () => {
-    setCurrentSlide(prevSlide => prevSlide === 0 ? posts.length - 1 : prevSlide - 1);
+    posts && posts.length && setCurrentSlide(prevSlide => prevSlide === 0 ? posts.length - 1 : prevSlide - 1);
   };
   const autoSlide = () => {
     const interval = setInterval(() => {
@@ -78,8 +77,6 @@ const SliderBlock = ({
       return data && data.guid && data.guid.rendered ? data.guid.rendered : "none";
     } catch (error) {
       return "none";
-    } finally {
-      setIsLoading(false);
     }
   };
   const fetchAuthorName = async authorId => {
@@ -94,8 +91,6 @@ const SliderBlock = ({
     } catch (error) {
       console.error("Error fetching author:", error);
       return "";
-    } finally {
-      setIsLoading(false);
     }
   };
   const fetchCategoryName = async categoryId => {
@@ -117,7 +112,6 @@ const SliderBlock = ({
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     setIsLoading(true);
     setBlogUrl(sliderBlogUrl.startsWith("https://") ? sliderBlogUrl : "https://" + sliderBlogUrl);
-    setIsLoading(false);
   }, [sliderBlogUrl]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (sliderAutoSlide) {
@@ -170,19 +164,19 @@ const SliderBlock = ({
       flexDirection: "row",
       justifyContent: "center"
     }
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Spinner, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Loading posts from the link. Please wait.")) : posts && posts.length ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Spinner, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Loading slider from the link. Please wait.")) : posts && posts.length ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "slideshow-container"
   }, posts.map((post, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     key: index,
     className: `slide ${index === currentSlide ? "active" : ""}`,
     style: {
       display: index === currentSlide ? "block" : "none",
-      backgroundImage: sliderDisplayImage ? `url(${featuredImageUrls[index]})` : "none",
+      backgroundImage: sliderShowImage ? `url(${featuredImageUrls[index]})` : "none",
       backgroundSize: "cover",
       backgroundPosition: "center",
       position: "relative"
     }
-  }, sliderDisplayImage && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  }, sliderShowImage && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: posts.link,
     target: "_blank",
     className: "featured-image"
@@ -192,7 +186,7 @@ const SliderBlock = ({
     width: "100%"
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "slider-content"
-  }, sliderDisplayTitle && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: posts.link,
     target: "_blank"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
@@ -201,7 +195,7 @@ const SliderBlock = ({
     }
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "meta-data"
-  }, sliderDisplayDate && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, sliderShowDate && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "date"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-calendar"
@@ -209,11 +203,11 @@ const SliderBlock = ({
     month: "long",
     day: "numeric",
     year: "numeric"
-  }))), sliderDisplayAuthor && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }))), sliderShowAuthor && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "author"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-admin-users"
-  }), authorNames[index] ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, authorNames[index]) : ""), sliderDisplayCategories && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), authorNames[index] ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, authorNames[index]) : ""), sliderShowCategories && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "categories"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-category"
@@ -224,14 +218,14 @@ const SliderBlock = ({
       key: catIndex,
       className: "individual-categories"
     }, categoryName, !isLastCategory && ",");
-  }))), sliderDisplayExcerpt && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }))), sliderShowExcerpt && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     dangerouslySetInnerHTML: {
       __html: truncateExcerpt(post.excerpt.rendered)
     }
   }), sliderShowReadMoreButton && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: post.link,
     className: "readmore-btn"
-  }, "Read More")))), sliderDisplayArrows && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  }, "Read More")))), sliderShowArrows && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     className: "prev",
     onClick: prevSlide
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
@@ -288,15 +282,14 @@ const Edit = ({
 }) => {
   const {
     sliderBlogUrl,
-    sliderDisplayTitle,
-    sliderDisplayExcerpt,
-    sliderDisplayImage,
-    sliderDisplayDate,
-    sliderDisplayAuthor,
-    sliderDisplayCategories,
+    sliderShowExcerpt,
+    sliderShowImage,
+    sliderShowDate,
+    sliderShowAuthor,
+    sliderShowCategories,
     sliderAutoSlide,
-    sliderDisplayArrows,
-    sliderDisplayNavigation,
+    sliderShowArrows,
+    sliderNumberOfSlides,
     sliderShowReadMoreButton
   } = attributes;
   const [posts, setPosts] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)([]);
@@ -333,13 +326,12 @@ const Edit = ({
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
-    setIsLoading(false);
   };
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
     fetchPosts();
   }, [sliderBlogUrl]);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Settings", "boilerplate"),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("General settings", "rt-camp-slidershow-block"),
     initialOpen: true
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
     label: "Blog link",
@@ -353,53 +345,27 @@ const Edit = ({
     onClick: () => setAttributes({
       sliderBlogUrl: url
     }),
-    style: {
-      marginBottom: 50
-    },
-    disabled: sliderBlogUrl == url
-  }, "Save link"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show post title",
-    help: sliderDisplayTitle ? "Showing title" : "Not showing title",
-    checked: sliderDisplayTitle,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayTitle: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    disabled: sliderBlogUrl == url,
+    help: "Click to save the entered blog link"
+  }, "Save link")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Slider settings", "rt-camp-slidershow-block"),
+    initialOpen: true
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
     label: "Show excerpt",
-    help: sliderDisplayExcerpt ? "Showing excerpt" : "Not showing excerpt",
-    checked: sliderDisplayExcerpt,
+    help: sliderShowExcerpt ? "Showing excerpt/description" : "Not showing excerpt/description",
+    checked: sliderShowExcerpt,
     onChange: userChoice => {
       setAttributes({
-        sliderDisplayExcerpt: userChoice
+        sliderShowExcerpt: userChoice
       });
     }
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
     label: "Show featured image",
-    help: sliderDisplayImage ? "Showing featured image" : "Not showing featured image",
-    checked: sliderDisplayImage,
+    help: sliderShowImage ? "Showing featured image" : "Not showing featured image",
+    checked: sliderShowImage,
     onChange: userChoice => {
       setAttributes({
-        sliderDisplayImage: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show date",
-    help: sliderDisplayDate ? "Showing date" : "Not showing date",
-    checked: sliderDisplayDate,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayDate: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show author",
-    help: sliderDisplayAuthor ? "Showing author" : "Not showing author",
-    checked: sliderDisplayAuthor,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayAuthor: userChoice
+        sliderShowImage: userChoice
       });
     }
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
@@ -412,16 +378,7 @@ const Edit = ({
       });
     }
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Show categories",
-    help: sliderDisplayCategories ? "Showing categories" : "Not showing categories",
-    checked: sliderDisplayCategories,
-    onChange: userChoice => {
-      setAttributes({
-        sliderDisplayCategories: userChoice
-      });
-    }
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Auto slide",
+    label: "Autoplay",
     help: sliderAutoSlide ? "Slider will auto slide" : "Slider will not auto slide",
     checked: sliderAutoSlide,
     onChange: userChoice => {
@@ -430,12 +387,42 @@ const Edit = ({
       });
     }
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-    label: "Slider arrows",
-    help: sliderAutoSlide ? "Show slider arrows" : "Hide slider arrows",
-    checked: sliderDisplayArrows,
+    label: "Show left/right arrows",
+    help: sliderShowArrows ? "Show slider left and right arrows" : "Hide slider arrows",
+    checked: sliderShowArrows,
     onChange: userChoice => {
       setAttributes({
-        sliderDisplayArrows: userChoice
+        sliderShowArrows: userChoice
+      });
+    }
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Meta data settings", "rt-camp-slidershow-block"),
+    initialOpen: true
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show categories",
+    help: sliderShowCategories ? "Showing categories" : "Not showing categories",
+    checked: sliderShowCategories,
+    onChange: userChoice => {
+      setAttributes({
+        sliderShowCategories: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show date",
+    help: sliderShowDate ? "Showing date" : "Not showing date",
+    checked: sliderShowDate,
+    onChange: userChoice => {
+      setAttributes({
+        sliderShowDate: userChoice
+      });
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show author",
+    help: sliderShowAuthor ? "Showing author" : "Not showing author",
+    checked: sliderShowAuthor,
+    onChange: userChoice => {
+      setAttributes({
+        sliderShowAuthor: userChoice
       });
     }
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_assets_slider_block_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -561,7 +548,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"minhaz/rt-camp-slideshow-block","version":"0.1.0","title":"rtCamp Slideshow Block","category":"rtcamp-assignment-category","icon":"slides","description":"Gutenberg Slideshow Block for WordPress Posts assignment from rtCamp.","example":{},"supports":{"html":false,"alignWide":true},"attributes":{"sliderBlogUrl":{"type":"string","default":"https://www.wptavern.com"},"sliderDisplayTitle":{"type":"boolean","default":true},"sliderDisplayExcerpt":{"type":"boolean","default":true},"sliderDisplayImage":{"type":"boolean","default":true},"sliderDisplayDate":{"type":"boolean","default":true},"sliderDisplayAuthor":{"type":"boolean","default":true},"sliderDisplayCategories":{"type":"boolean","default":true},"sliderAutoSlide":{"type":"boolean","default":true},"sliderDisplayArrows":{"type":"boolean","default":true},"sliderDisplayNavigation":{"type":"boolean","default":true},"sliderShowReadMoreButton":{"type":"boolean","default":true}},"textdomain":"rt-camp-slideshow-block","editorScript":"file:./index.js","editorStyle":["file:./index.css","dashicons"],"style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"minhaz/rt-camp-slideshow-block","version":"0.1.0","title":"rtCamp Slideshow Block","category":"rtcamp-assignment-category","icon":"slides","description":"Gutenberg Slideshow Block for WordPress Posts assignment from rtCamp.","example":{},"supports":{"html":false,"alignWide":true},"attributes":{"sliderBlogUrl":{"type":"string","default":"https://www.wptavern.com"},"sliderShowExcerpt":{"type":"boolean","default":true},"sliderShowImage":{"type":"boolean","default":true},"sliderShowDate":{"type":"boolean","default":true},"sliderShowAuthor":{"type":"boolean","default":true},"sliderShowCategories":{"type":"boolean","default":true},"sliderAutoSlide":{"type":"boolean","default":true},"sliderShowArrows":{"type":"boolean","default":true},"sliderShowNavigation":{"type":"boolean","default":true},"sliderShowReadMoreButton":{"type":"boolean","default":true}},"textdomain":"rt-camp-slideshow-block","editorScript":"file:./index.js","editorStyle":["file:./index.css","dashicons"],"style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ })
 

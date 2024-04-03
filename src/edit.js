@@ -5,6 +5,7 @@ import {
 	PanelBody,
 	TextControl,
 	ToggleControl,
+	DropdownControl,
 } from "@wordpress/components";
 import "./editor.scss";
 
@@ -14,15 +15,14 @@ import SliderBlock from "./assets/slider-block.js";
 const Edit = ({ attributes, setAttributes }) => {
 	const {
 		sliderBlogUrl,
-		sliderDisplayTitle,
-		sliderDisplayExcerpt,
-		sliderDisplayImage,
-		sliderDisplayDate,
-		sliderDisplayAuthor,
-		sliderDisplayCategories,
+		sliderShowExcerpt,
+		sliderShowImage,
+		sliderShowDate,
+		sliderShowAuthor,
+		sliderShowCategories,
 		sliderAutoSlide,
-		sliderDisplayArrows,
-		sliderDisplayNavigation,
+		sliderShowArrows,
+		sliderNumberOfSlides,
 		sliderShowReadMoreButton,
 	} = attributes;
 
@@ -64,7 +64,6 @@ const Edit = ({ attributes, setAttributes }) => {
 		} catch (error) {
 			console.error("Error fetching posts:", error);
 		}
-		setIsLoading(false);
 	};
 
 	useEffect(() => {
@@ -74,7 +73,10 @@ const Edit = ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Settings", "boilerplate")} initialOpen={true}>
+				<PanelBody
+					title={__("General settings", "rt-camp-slidershow-block")}
+					initialOpen={true}
+				>
 					<TextControl
 						label="Blog link"
 						value={url}
@@ -86,57 +88,38 @@ const Edit = ({ attributes, setAttributes }) => {
 					<Button
 						variant="primary"
 						onClick={() => setAttributes({ sliderBlogUrl: url })}
-						style={{
-							marginBottom: 50,
-						}}
 						disabled={sliderBlogUrl == url}
+						help="Click to save the entered blog link"
 					>
 						Save link
 					</Button>
-					<ToggleControl
-						label="Show post title"
-						help={sliderDisplayTitle ? "Showing title" : "Not showing title"}
-						checked={sliderDisplayTitle}
-						onChange={(userChoice) => {
-							setAttributes({ sliderDisplayTitle: userChoice });
-						}}
-					/>
+				</PanelBody>
+				<PanelBody
+					title={__("Slider settings", "rt-camp-slidershow-block")}
+					initialOpen={true}
+				>
 					<ToggleControl
 						label="Show excerpt"
 						help={
-							sliderDisplayExcerpt ? "Showing excerpt" : "Not showing excerpt"
+							sliderShowExcerpt
+								? "Showing excerpt/description"
+								: "Not showing excerpt/description"
 						}
-						checked={sliderDisplayExcerpt}
+						checked={sliderShowExcerpt}
 						onChange={(userChoice) => {
-							setAttributes({ sliderDisplayExcerpt: userChoice });
+							setAttributes({ sliderShowExcerpt: userChoice });
 						}}
 					/>
 					<ToggleControl
 						label="Show featured image"
 						help={
-							sliderDisplayImage
+							sliderShowImage
 								? "Showing featured image"
 								: "Not showing featured image"
 						}
-						checked={sliderDisplayImage}
+						checked={sliderShowImage}
 						onChange={(userChoice) => {
-							setAttributes({ sliderDisplayImage: userChoice });
-						}}
-					/>
-					<ToggleControl
-						label="Show date"
-						help={sliderDisplayDate ? "Showing date" : "Not showing date"}
-						checked={sliderDisplayDate}
-						onChange={(userChoice) => {
-							setAttributes({ sliderDisplayDate: userChoice });
-						}}
-					/>
-					<ToggleControl
-						label="Show author"
-						help={sliderDisplayAuthor ? "Showing author" : "Not showing author"}
-						checked={sliderDisplayAuthor}
-						onChange={(userChoice) => {
-							setAttributes({ sliderDisplayAuthor: userChoice });
+							setAttributes({ sliderShowImage: userChoice });
 						}}
 					/>
 					<ToggleControl
@@ -152,19 +135,7 @@ const Edit = ({ attributes, setAttributes }) => {
 						}}
 					/>
 					<ToggleControl
-						label="Show categories"
-						help={
-							sliderDisplayCategories
-								? "Showing categories"
-								: "Not showing categories"
-						}
-						checked={sliderDisplayCategories}
-						onChange={(userChoice) => {
-							setAttributes({ sliderDisplayCategories: userChoice });
-						}}
-					/>
-					<ToggleControl
-						label="Auto slide"
+						label="Autoplay"
 						help={
 							sliderAutoSlide
 								? "Slider will auto slide"
@@ -176,11 +147,49 @@ const Edit = ({ attributes, setAttributes }) => {
 						}}
 					/>
 					<ToggleControl
-						label="Slider arrows"
-						help={sliderAutoSlide ? "Show slider arrows" : "Hide slider arrows"}
-						checked={sliderDisplayArrows}
+						label="Show left/right arrows"
+						help={
+							sliderShowArrows
+								? "Show slider left and right arrows"
+								: "Hide slider arrows"
+						}
+						checked={sliderShowArrows}
 						onChange={(userChoice) => {
-							setAttributes({ sliderDisplayArrows: userChoice });
+							setAttributes({ sliderShowArrows: userChoice });
+						}}
+					/>
+				</PanelBody>
+				<PanelBody
+					title={__("Meta data settings", "rt-camp-slidershow-block")}
+					initialOpen={true}
+				>
+					<ToggleControl
+						label="Show categories"
+						help={
+							sliderShowCategories
+								? "Showing categories"
+								: "Not showing categories"
+						}
+						checked={sliderShowCategories}
+						onChange={(userChoice) => {
+							setAttributes({ sliderShowCategories: userChoice });
+						}}
+					/>
+
+					<ToggleControl
+						label="Show date"
+						help={sliderShowDate ? "Showing date" : "Not showing date"}
+						checked={sliderShowDate}
+						onChange={(userChoice) => {
+							setAttributes({ sliderShowDate: userChoice });
+						}}
+					/>
+					<ToggleControl
+						label="Show author"
+						help={sliderShowAuthor ? "Showing author" : "Not showing author"}
+						checked={sliderShowAuthor}
+						onChange={(userChoice) => {
+							setAttributes({ sliderShowAuthor: userChoice });
 						}}
 					/>
 				</PanelBody>
