@@ -197,7 +197,7 @@ const SliderBlock = ({
   }, sliderDisplayDate && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "date"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    class: "dashicons dashicons-calendar"
+    className: "dashicons dashicons-calendar"
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, new Date(post.date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
@@ -228,12 +228,12 @@ const SliderBlock = ({
     className: "prev",
     onClick: prevSlide
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    class: "dashicons dashicons-arrow-left-alt"
+    className: "dashicons dashicons-arrow-left-alt"
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     className: "next",
     onClick: nextSlide
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    class: "dashicons dashicons-arrow-right-alt"
+    className: "dashicons dashicons-arrow-right-alt"
   }))), sliderAutoSlide && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "navigation-container"
   }, posts.map((post, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {

@@ -220,7 +220,7 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 								<div className="meta-data">
 									{sliderDisplayDate && (
 										<div className="date">
-											<span class="dashicons dashicons-calendar"></span>
+											<span className="dashicons dashicons-calendar"></span>
 											<p>
 												{new Date(post.date).toLocaleDateString("en-US", {
 													month: "long",
@@ -275,10 +275,10 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 					{sliderDisplayArrows && (
 						<>
 							<a className="prev" onClick={prevSlide}>
-								<span class="dashicons dashicons-arrow-left-alt"></span>
+								<span className="dashicons dashicons-arrow-left-alt"></span>
 							</a>
 							<a className="next" onClick={nextSlide}>
-								<span class="dashicons dashicons-arrow-right-alt"></span>
+								<span className="dashicons dashicons-arrow-right-alt"></span>
 							</a>
 						</>
 					)}
