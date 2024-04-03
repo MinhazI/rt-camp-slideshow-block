@@ -27,7 +27,7 @@ const Edit = ({ attributes, setAttributes }) => {
 	} = attributes;
 
 	const [posts, setPosts] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const [url, setUrl] = useState(sliderBlogUrl);
 
 	const fetchPosts = async () => {
@@ -185,7 +185,12 @@ const Edit = ({ attributes, setAttributes }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<SliderBlock posts={posts} attributes={attributes} loading={isLoading} />
+			<SliderBlock
+				posts={posts}
+				attributes={attributes}
+				isLoading={isLoading}
+				setIsLoading={setIsLoading}
+			/>
 		</>
 	);
 };

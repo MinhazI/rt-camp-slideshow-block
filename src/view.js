@@ -39,7 +39,7 @@ window.onload = function () {
 	navigationDots.length
 		? setInterval(function () {
 				navigateSlides(1);
-		  }, 7000)
+		  }, 5000)
 		: "";
 };
 

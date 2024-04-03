@@ -1,0 +1,1 @@
+{"version":3,"file":"index.css","mappings":";;;AACI;EACI;EACA;AAAR;AAGI;EACI;EACA;AADR,C","sources":["webpack://rt-camp-slideshow-block/./src/editor.scss"],"sourcesContent":[".slide {\r\n    &>* {\r\n        z-index: 2;\r\n        position: relative;\r\n    }\r\n\r\n    span {\r\n        z-index: 2;\r\n        position: relative;\r\n    }\r\n}"],"names":[],"sourceRoot":""}
