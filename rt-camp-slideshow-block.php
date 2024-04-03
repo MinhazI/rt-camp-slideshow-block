@@ -52,7 +52,6 @@ function register_custom_endpoint()
 	));
 }
 
-
 function fetch_posts_api_callback($request)
 {
 	$params = $request->get_params();
@@ -90,6 +89,12 @@ function fetch_posts_api_callback($request)
 	return rest_ensure_response($response);
 }
 
+function rt_camp_slideshow_block_enqueue_assets()
+{
+	// Enqueue WordPress dashicons stylesheet
+	wp_enqueue_style('dashicons');
+}
+add_action('enqueue_block_editor_assets', 'rt_camp_slideshow_block_enqueue_assets');
 
 function rt_camp_slideshow_block_register()
 {

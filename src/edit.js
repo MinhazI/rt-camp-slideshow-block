@@ -185,7 +185,12 @@ const Edit = ({ attributes, setAttributes }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<SliderBlock posts={posts} attributes={attributes} loading={isLoading} />
+			<SliderBlock
+				posts={posts}
+				attributes={attributes}
+				isLoading={isLoading}
+				setIsLoading={setIsLoading}
+			/>
 		</>
 	);
 };

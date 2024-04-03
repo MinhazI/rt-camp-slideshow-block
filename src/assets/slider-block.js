@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useBlockProps } from "@wordpress/block-editor";
-import { Icon, Spinner } from "@wordpress/components";
-import { arrowLeft, arrowRight } from "@wordpress/icons";
+import { Spinner } from "@wordpress/components";
 
-const SliderBlock = ({ posts, attributes, loading }) => {
+const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 	const {
 		sliderBlogUrl,
 		sliderDisplayTitle,
@@ -17,6 +16,10 @@ const SliderBlock = ({ posts, attributes, loading }) => {
 		sliderShowReadMoreButton,
 	} = attributes;
 	const [currentSlide, setCurrentSlide] = useState(0);
+	const [featuredImageUrls, setFeaturedImageUrls] = useState([]);
+	const [authorNames, setAuthorNames] = useState([]);
+	const [categoryNames, setCategoryNames] = useState([]);
+	const [blogUrl, setBlogUrl] = useState(sliderBlogUrl);
 
 	const nextSlide = () => {
 		setCurrentSlide((prevSlide) =>
@@ -37,17 +40,8 @@ const SliderBlock = ({ posts, attributes, loading }) => {
 		return () => clearInterval(interval);
 	};
 
-	useEffect(() => {
-		sliderAutoSlide && autoSlide;
-	}, [posts]);
-
 	const setSlide = (index) => {
 		setCurrentSlide(index);
-	};
-
-	const formatDate = (dateString) => {
-		const options = { year: "numeric", month: "long", day: "numeric" };
-		return new Date(dateString).toLocaleDateString(undefined, options);
 	};
 
 	const truncateExcerpt = (excerpt) => {
@@ -58,9 +52,118 @@ const SliderBlock = ({ posts, attributes, loading }) => {
 		return excerpt;
 	};
 
+	const fetchFeaturedImage = async (featured_media) => {
+		setIsLoading(true);
+		try {
+			const response = await fetch(
+				`${blogUrl}/wp-json/wp/v2/media/${featured_media}`,
+			);
+			if (!response.ok) {
+				return "none";
+			}
+			const data = await response.json();
+
+			return data && data.guid && data.guid.rendered
+				? data.guid.rendered
+				: "none";
+		} catch (error) {
+			return "none";
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	const fetchAuthorName = async (authorId) => {
+		setIsLoading(true);
+		try {
+			const response = await fetch(
+				`${blogUrl}/wp-json/wp/v2/users/${authorId}`,
+			);
+			if (!response.ok) {
+				return "";
+			}
+			const authorData = await response.json();
+			return authorData.name || "";
+		} catch (error) {
+			console.error("Error fetching author:", error);
+			return "";
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	const fetchCategoryName = async (categoryId) => {
+		setIsLoading(true);
+		try {
+			const response = await fetch(
+				`${blogUrl}/wp-json/wp/v2/categories/${categoryId}`,
+			);
+			if (!response.ok) {
+				throw new Error("Failed to fetch category");
+			}
+			const categoryData = await response.json();
+			return categoryData.name;
+		} catch (error) {
+			console.error("Error fetching category:", error);
+			return "";
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		setBlogUrl(
+			sliderBlogUrl.startsWith("https://")
+				? sliderBlogUrl
+				: "https://" + sliderBlogUrl,
+		);
+	}, [sliderBlogUrl]);
+
+	useEffect(() => {
+		sliderAutoSlide && autoSlide;
+	}, [posts]);
+
+	useEffect(() => {
+		const fetchImageUrls = async () => {
+			if (posts && posts.length) {
+				const urls = await Promise.all(
+					posts.map((post) => fetchFeaturedImage(post.featured_media)),
+				);
+				setFeaturedImageUrls(urls);
+			}
+		};
+
+		const fetchAuthors = async () => {
+			if (posts && posts.length) {
+				const authorPromises = posts.map((post) =>
+					fetchAuthorName(post.author),
+				);
+				const authorNames = await Promise.all(authorPromises);
+				setAuthorNames(authorNames);
+			}
+		};
+
+		const fetchCategoryNames = async () => {
+			if (posts && posts.length) {
+				const categoryNames = [];
+				for (const post of posts) {
+					for (const categoryId of post.categories) {
+						const categoryName = await fetchCategoryName(categoryId);
+						categoryNames.push(categoryName);
+					}
+				}
+				setCategoryNames(categoryNames);
+			}
+		};
+
+		fetchCategoryNames();
+		fetchAuthors();
+		fetchImageUrls();
+	}, [posts]);
+
 	return (
 		<div {...useBlockProps()}>
-			{loading ? (
+			{isLoading ? (
 				<div
 					style={{
 						padding: 20,
@@ -89,27 +192,71 @@ const SliderBlock = ({ posts, attributes, loading }) => {
 							className={`slide ${index === currentSlide ? "active" : ""}`}
 							style={{
 								display: index === currentSlide ? "block" : "none",
+								backgroundImage: sliderDisplayImage
+									? `url(${featuredImageUrls[index]})`
+									: "none",
 								backgroundSize: "cover",
 								backgroundPosition: "center",
 								position: "relative",
 							}}
 						>
-							<div className="overlay">
-								{sliderDisplayTitle && (
-									<h3
-										dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+							{sliderDisplayImage && (
+								<a href={posts.link} target="_blank" className="featured-image">
+									<img
+										src={featuredImageUrls[index]}
+										alt={post.title.rendered}
+										width="100%"
 									/>
+								</a>
+							)}
+							<div className="slider-content">
+								{sliderDisplayTitle && (
+									<a href={posts.link} target="_blank">
+										<h2
+											dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+										/>
+									</a>
 								)}
-								{sliderDisplayDate && <p>{formatDate(post.date)}</p>}
-								{sliderDisplayAuthor && <p>{post.author}</p>}
-								{sliderDisplayCategories && post.categories && (
-									<div>
-										Categories:{" "}
-										{post.categories
-											.map((category) => category.name)
-											.join(", ")}
-									</div>
-								)}
+								<div className="meta-data">
+									{sliderDisplayDate && (
+										<div className="date">
+											<span class="dashicons dashicons-calendar"></span>
+											<p>
+												{new Date(post.date).toLocaleDateString("en-US", {
+													month: "long",
+													day: "numeric",
+													year: "numeric",
+												})}
+											</p>
+										</div>
+									)}
+									{sliderDisplayAuthor && (
+										<div className="author">
+											<span className="dashicons dashicons-admin-users"></span>
+											{authorNames[index] ? <p>{authorNames[index]}</p> : ""}
+										</div>
+									)}
+									{sliderDisplayCategories && (
+										<div className="categories">
+											<span className="dashicons dashicons-category"></span>
+											{post.categories.map((categoryId, catIndex) => {
+												const categoryName =
+													categoryNames[
+														index * post.categories.length + catIndex
+													];
+												const isLastCategory =
+													catIndex === post.categories.length - 1;
+												return (
+													<p key={catIndex} className="individual-categories">
+														{categoryName}
+														{!isLastCategory && ","}
+													</p>
+												);
+											})}
+										</div>
+									)}
+								</div>
+
 								{sliderDisplayExcerpt && (
 									<p
 										dangerouslySetInnerHTML={{
@@ -128,10 +275,10 @@ const SliderBlock = ({ posts, attributes, loading }) => {
 					{sliderDisplayArrows && (
 						<>
 							<a className="prev" onClick={prevSlide}>
-								<Icon icon={arrowLeft} />
+								<span class="dashicons dashicons-arrow-left-alt"></span>
 							</a>
 							<a className="next" onClick={nextSlide}>
-								<Icon icon={arrowRight} />
+								<span class="dashicons dashicons-arrow-right-alt"></span>
 							</a>
 						</>
 					)}

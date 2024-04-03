@@ -1,0 +1,11 @@
+.slide {
+    &>* {
+        z-index: 2;
+        position: relative;
+    }
+
+    span {
+        z-index: 2;
+        position: relative;
+    }
+}
