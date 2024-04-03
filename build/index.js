@@ -54,7 +54,7 @@ const SliderBlock = ({
   const autoSlide = () => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 7000);
+    }, 5000);
     return () => clearInterval(interval);
   };
   const setSlide = index => {
@@ -115,11 +115,16 @@ const SliderBlock = ({
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setIsLoading(true);
     setBlogUrl(sliderBlogUrl.startsWith("https://") ? sliderBlogUrl : "https://" + sliderBlogUrl);
+    setIsLoading(false);
   }, [sliderBlogUrl]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    sliderAutoSlide && autoSlide;
-  }, [posts]);
+    if (sliderAutoSlide) {
+      const clearInterval = autoSlide();
+      return clearInterval;
+    }
+  }, [posts, sliderAutoSlide]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const fetchImageUrls = async () => {
       if (posts && posts.length) {
@@ -138,10 +143,12 @@ const SliderBlock = ({
       if (posts && posts.length) {
         const categoryNames = [];
         for (const post of posts) {
+          const postCategoryNames = [];
           for (const categoryId of post.categories) {
             const categoryName = await fetchCategoryName(categoryId);
-            categoryNames.push(categoryName);
+            postCategoryNames.push(categoryName);
           }
+          categoryNames.push(postCategoryNames);
         }
         setCategoryNames(categoryNames);
       }
@@ -211,7 +218,7 @@ const SliderBlock = ({
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "dashicons dashicons-category"
   }), post.categories.map((categoryId, catIndex) => {
-    const categoryName = categoryNames[index * post.categories.length + catIndex];
+    const categoryName = categoryNames[index] ? categoryNames[index][catIndex] : "";
     const isLastCategory = catIndex === post.categories.length - 1;
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
       key: catIndex,
@@ -293,7 +300,7 @@ const Edit = ({
     sliderShowReadMoreButton
   } = attributes;
   const [posts, setPosts] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)([]);
-  const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)(false);
+  const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)(true);
   const [url, setUrl] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)(sliderBlogUrl);
   const fetchPosts = async () => {
     setIsLoading(true);

@@ -27,7 +27,7 @@ const Edit = ({ attributes, setAttributes }) => {
 	} = attributes;
 
 	const [posts, setPosts] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const [url, setUrl] = useState(sliderBlogUrl);
 
 	const fetchPosts = async () => {

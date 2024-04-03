@@ -36,7 +36,7 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 	const autoSlide = () => {
 		const interval = setInterval(() => {
 			nextSlide();
-		}, 7000);
+		}, 5000);
 		return () => clearInterval(interval);
 	};
 
@@ -112,16 +112,21 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 	};
 
 	useEffect(() => {
+		setIsLoading(true);
 		setBlogUrl(
 			sliderBlogUrl.startsWith("https://")
 				? sliderBlogUrl
 				: "https://" + sliderBlogUrl,
 		);
+		setIsLoading(false);
 	}, [sliderBlogUrl]);
 
 	useEffect(() => {
-		sliderAutoSlide && autoSlide;
-	}, [posts]);
+		if (sliderAutoSlide) {
+			const clearInterval = autoSlide();
+			return clearInterval;
+		}
+	}, [posts, sliderAutoSlide]);
 
 	useEffect(() => {
 		const fetchImageUrls = async () => {
@@ -147,10 +152,12 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 			if (posts && posts.length) {
 				const categoryNames = [];
 				for (const post of posts) {
+					const postCategoryNames = [];
 					for (const categoryId of post.categories) {
 						const categoryName = await fetchCategoryName(categoryId);
-						categoryNames.push(categoryName);
+						postCategoryNames.push(categoryName);
 					}
+					categoryNames.push(postCategoryNames);
 				}
 				setCategoryNames(categoryNames);
 			}
@@ -240,10 +247,9 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 										<div className="categories">
 											<span className="dashicons dashicons-category"></span>
 											{post.categories.map((categoryId, catIndex) => {
-												const categoryName =
-													categoryNames[
-														index * post.categories.length + catIndex
-													];
+												const categoryName = categoryNames[index]
+													? categoryNames[index][catIndex]
+													: "";
 												const isLastCategory =
 													catIndex === post.categories.length - 1;
 												return (

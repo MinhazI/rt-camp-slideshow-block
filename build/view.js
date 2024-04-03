@@ -34,7 +34,7 @@ window.onload = function () {
   var navigationDots = document.getElementsByClassName("navigation");
   navigationDots.length ? setInterval(function () {
     navigateSlides(1);
-  }, 7000) : "";
+  }, 5000) : "";
 };
 document.addEventListener("DOMContentLoaded", function () {
   const prevButton = document.querySelector(".prev");
