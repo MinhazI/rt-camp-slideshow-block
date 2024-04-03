@@ -1,16 +1,12 @@
-// .slider-block {
-// 	max-width: unset !important;
-// }
-
 .slideshow-container {
 	position: relative;
 	background-color: transparent;
 
 	.slide {
-		padding: 80px;
 		text-align: center;
 		display: none;
 		min-height: 400px;
+		padding: 80px;
 
 		&>* {
 			z-index: 2;
@@ -36,6 +32,11 @@
 		&:hover {
 			background-color: rgba(0, 0, 0, 0.8);
 			color: white;
+		}
+
+		.dashicons,
+		.dashicons-before:before {
+			line-height: unset;
 		}
 	}
 
@@ -81,7 +82,7 @@
 			left: 0;
 			width: 100%;
 			height: 100%;
-			background: rgba(255, 255, 255, 0.9);
+			background: rgba(255, 255, 255, 0.97);
 			pointer-events: none;
 		}
 	}
@@ -89,10 +90,11 @@
 	.readmore-btn {
 		color: #ffffff;
 		background-color: #000000;
-		padding-top: 20px;
-		padding-bottom: 20px;
-		padding-left: 40px;
-		padding-right: 40px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		padding-left: 20px;
+		padding-right: 20px;
+		position: relative;
 		top: 40px;
 		transition: color 0.3s, background-color 0.3s, border 0.3s;
 
@@ -101,5 +103,63 @@
 			background-color: #ffffff;
 			border: 3px solid #000000
 		}
+	}
+
+	.meta-data {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 12px;
+	}
+
+	.meta-data p,
+	.meta-data .categories {
+		margin-right: 10px;
+	}
+
+	.categories,
+	.date,
+	.author {
+		display: flex;
+		align-items: center;
+	}
+
+	.individual-categories {
+		margin-right: 5px;
+	}
+
+	.meta-data span.dashicons {
+		margin-right: 5px;
+	}
+
+	@media screen and (max-width: 768px) {
+		.meta-data {
+			flex-direction: column;
+			text-align: center;
+
+			p,
+			.categories,
+			.date,
+			.author {
+				margin-right: 0;
+				margin-bottom: 5px;
+			}
+		}
+
+		.categories,
+		.date,
+		.author {
+			flex-wrap: wrap;
+		}
+
+		.slide {
+			padding: 50px;
+			padding-bottom: 80px;
+		}
+	}
+
+	a:hover,
+	h2:hover {
+		text-decoration: underline;
 	}
 }

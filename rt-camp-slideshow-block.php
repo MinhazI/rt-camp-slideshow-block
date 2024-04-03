@@ -42,6 +42,54 @@ if (version_compare(get_bloginfo('version'), '5.8', '>=')) {
 	add_filter('block_categories', 'register_block_category');
 }
 
+add_action('rest_api_init', 'register_custom_endpoint');
+
+function register_custom_endpoint()
+{
+	register_rest_route('rtcamp-slideshow/v1', '/fetch-posts', array(
+		'methods'  => 'POST',
+		'callback' => 'fetch_posts_api_callback',
+	));
+}
+
+
+function fetch_posts_api_callback($request)
+{
+	$params = $request->get_params();
+
+	$default_site_url = get_bloginfo('url');
+	$slider_blog_url = isset($params['sliderBlogUrl']) ? $params['sliderBlogUrl'] : $default_site_url;
+
+	if (!empty($slider_blog_url) && strpos($slider_blog_url, 'https://') !== 0 && $slider_blog_url !== $default_site_url) {
+		$slider_blog_url = 'https://' . $slider_blog_url;
+	}
+
+	$posts_response = wp_remote_get($slider_blog_url . '/wp-json/wp/v2/posts');
+
+	if (!is_wp_error($posts_response) && wp_remote_retrieve_response_code($posts_response) === 200) {
+		$posts_data = json_decode(wp_remote_retrieve_body($posts_response));
+
+		if (empty($posts_data)) {
+			$response = array(
+				'error'   => true,
+				'message' => 'No posts found. Please check the blog link.'
+			);
+		} else {
+			$response = array(
+				'error' => false,
+				'posts' => $posts_data
+			);
+		}
+	} else {
+		$response = array(
+			'error'   => true,
+			'message' => 'Failed to fetch posts from the blog.'
+		);
+	}
+
+	return rest_ensure_response($response);
+}
+
 
 function rt_camp_slideshow_block_register()
 {

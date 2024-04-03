@@ -28,14 +28,19 @@ function showSlides(n) {
 			"",
 		);
 	}
-	slides[slideIndex - 1].style.display = "block";
-	navigationDots[slideIndex - 1].className += " active";
+	navigateSlides ? (slides[slideIndex - 1].style.display = "block") : "";
+	navigationDots.length
+		? (navigationDots[slideIndex - 1].className += " active")
+		: "";
 }
 
 window.onload = function () {
-	setInterval(function () {
-		navigateSlides(1);
-	}, 7000);
+	var navigationDots = document.getElementsByClassName("navigation");
+	navigationDots.length
+		? setInterval(function () {
+				navigateSlides(1);
+		  }, 7000)
+		: "";
 };
 
 document.addEventListener("DOMContentLoaded", function () {
