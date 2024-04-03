@@ -186,10 +186,7 @@ const SliderBlock = ({ posts, attributes, isLoading, setIsLoading }) => {
 					>
 						<Spinner />
 					</div>
-					<p>
-						Loading posts from the link. If the posts aren't showing, try adding
-						the link again.
-					</p>
+					<p>Loading posts from the link. Please wait.</p>
 				</div>
 			) : posts && posts.length ? (
 				<div className="slideshow-container">
